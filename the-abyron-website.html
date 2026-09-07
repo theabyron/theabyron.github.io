@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE ABYRON — Independent Music Label</title>
+<meta name="description" content="THE ABYRON — Independent music label. Discover artists, releases and new sounds.">
+<style>
+:root{--bg:#070707;--panel:#111;--text:#f4f4f4;--muted:#9b9b9b;--line:#242424;--accent:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+a{color:inherit;text-decoration:none}.nav{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:22px 6%;background:linear-gradient(#070707ee,transparent);backdrop-filter:blur(8px)}
+.logo{font-weight:900;letter-spacing:.18em;font-size:15px}.links{display:flex;gap:28px;font-size:13px;color:#bbb}.links a:hover{color:#fff}
+.hero{min-height:92vh;display:flex;align-items:flex-end;padding:130px 6% 90px;position:relative;overflow:hidden;background:radial-gradient(circle at 70% 30%,#30303055,transparent 35%),radial-gradient(circle at 20% 80%,#1b1b1b,transparent 35%)}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#070707 0%,transparent 70%),linear-gradient(0deg,#070707,transparent 45%);pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:850px}.eyebrow{font-size:12px;letter-spacing:.28em;color:#aaa;text-transform:uppercase;margin-bottom:20px}
+h1{font-size:clamp(58px,12vw,150px);line-height:.82;margin:0 0 30px;letter-spacing:-.07em;font-weight:950}
+.hero p{max-width:590px;color:#bbb;font-size:18px;line-height:1.7}.cta{display:inline-block;margin-top:20px;padding:14px 22px;border:1px solid #555;font-size:12px;letter-spacing:.15em;text-transform:uppercase}.cta:hover{background:#fff;color:#000}
+section{padding:95px 6%;border-top:1px solid var(--line)}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:35px}.section-head h2{font-size:42px;margin:0;letter-spacing:-.04em}.section-head span{color:#777;font-size:12px;letter-spacing:.15em}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:var(--panel);border:1px solid var(--line);padding:18px;min-height:330px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}.cover{position:absolute;inset:0;background:linear-gradient(135deg,#292929,#0b0b0b 60%,#353535);opacity:.9}.cover:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;border:1px solid #7773;left:15%;top:18%;box-shadow:0 0 70px #fff1}.card-content{position:relative;z-index:1}.tag{font-size:10px;letter-spacing:.16em;color:#aaa;text-transform:uppercase}.card h3{font-size:27px;margin:7px 0}.card p{color:#aaa;margin:0;font-size:13px}.artist{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center}.artist-box{min-height:390px;background:radial-gradient(circle at 60% 40%,#4a4a4a,#151515 38%,#080808 75%);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:80px;font-weight:900;letter-spacing:-.08em}.artist-text h2{font-size:55px;letter-spacing:-.05em;margin:0 0 15px}.artist-text p{color:#aaa;line-height:1.8}.about{max-width:850px}.about p{font-size:22px;line-height:1.65;color:#bbb}.contact{display:flex;justify-content:space-between;gap:40px;align-items:center}.contact h2{font-size:55px;margin:0;letter-spacing:-.05em}.contact p{color:#999}.footer{padding:35px 6%;display:flex;justify-content:space-between;color:#666;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+@media(max-width:760px){.links{display:none}.hero{min-height:80vh;padding-bottom:65px}.grid{grid-template-columns:1fr}.artist{grid-template-columns:1fr}.artist-box{min-height:280px}.section-head,.contact{display:block}.section-head span{display:block;margin-top:10px}.contact h2{font-size:42px}.footer{display:block}.footer div+div{margin-top:12px}}
+</style>
+</head>
+<body>
+<nav class="nav"><a class="logo" href="#">THE ABYRON</a><div class="links"><a href="#releases">Releases</a><a href="#artists">Artists</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav>
+
+<header class="hero">
+<div class="hero-content">
+<div class="eyebrow">Independent Music Label · Est. 2026</div>
+<h1>THE<br>ABYRON</h1>
+<p>A home for independent artists, original sounds and music that deserves to be heard. Discover the latest releases from The Abyron.</p>
+<a class="cta" href="#releases">Explore Releases ↓</a>
+</div>
+</header>
+
+<section id="releases">
+<div class="section-head"><h2>Latest Releases</h2><span>SELECTED CATALOGUE</span></div>
+<div class="grid">
+<a class="card" href="#" aria-label="Release one"><div class="cover"></div><div class="card-content"><div class="tag">Single · 2026</div><h3>PREM</h3><p>ANKUSH ARYA</p></div></a>
+<a class="card" href="#" aria-label="Release two"><div class="cover"></div><div class="card-content"><div class="tag">Single · 2026</div><h3>ZULFEIN</h3><p>ANKUSH ARYA</p></div></a>
+<a class="card" href="#" aria-label="Release three"><div class="cover"></div><div class="card-content"><div class="tag">Coming Soon</div><h3>NEW SOUND</h3><p>THE ABYRON</p></div></a>
+</div>
+</section>
+
+<section id="artists">
+<div class="section-head"><h2>Artists</h2><span>THE ABYRON FAMILY</span></div>
+<div class="artist">
+<div class="artist-box">AA</div>
+<div class="artist-text"><div class="tag">Featured Artist</div><h2>ANKUSH ARYA</h2><p>Independent artist and the creative force behind The Abyron. Blending modern production with emotional songwriting to create a distinct sound.</p><a class="cta" href="#contact">Artist / Booking</a></div>
+</div>
+</section>
+
+<section id="about">
+<div class="about"><div class="eyebrow">About The Label</div><h2 style="font-size:55px;letter-spacing:-.05em;margin:0 0 20px">Music first.<br>Always.</h2><p>THE ABYRON is an independent music label focused on releasing, developing and building a home for original artists and sounds. From intimate singles to complete projects, every release is part of the catalogue.</p></div>
+</section>
+
+<section id="contact">
+<div class="contact"><div><div class="eyebrow">Get in touch</div><h2>LET'S MAKE<br>SOMETHING.</h2><p>For demos, artist enquiries, collaborations and business enquiries.</p></div><a class="cta" href="mailto:theabyron.music@gmail.com">Email The Abyron →</a></div>
+</section>
+
+<footer class="footer"><div>© 2026 THE ABYRON</div><div>Independent Music Label</div></footer>
+</body>
+</html>
