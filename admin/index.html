@@ -17,20 +17,14 @@ const app=initializeApp(FIREBASE_CONFIG),auth=getAuth(app),db=getFirestore(app);
 
 // ADMIN SESSION SECURITY
 const ADMIN_LEFT_KEY = "theabyron_admin_left";
-const adminWasLeft = sessionStorage.getItem(ADMIN_LEFT_KEY) === "1";
 
-async function forceAdminLogout() {
-  try {
-    await signOut(auth);
-  } catch (e) {
-    console.error("Admin logout failed:", e);
-  }
-}
-
-// Mark session as ended whenever Admin Panel is left
 function markAdminLeft() {
-  sessionStorage.setItem(ADMIN_LEFT_KEY, "1");
-  forceAdminLogout();
+  try {
+    sessionStorage.setItem(ADMIN_LEFT_KEY, "1");
+  } catch (e) {
+    console.error("Session marker failed:", e);
+  }
+  signOut(auth).catch(e => console.error("Admin logout failed:", e));
 }
 
 // Background / another app / another tab
@@ -60,5 +54,5 @@ $('vlogForm').onsubmit=e=>{e.preventDefault();$('vlogMsg').textContent='Saving�
 $('blogForm').onsubmit=e=>{e.preventDefault();$('blogMsg').textContent='Saving…';save('blogs',{title:$('blogTitle').value.trim(),category:$('blogType').value,imageUrl:$('blogImage').value.trim(),description:$('blogDesc').value.trim(),link:$('blogLink').value.trim(),published:$('blogPub').checked}).then(()=>$('blogMsg').textContent='Published/saved successfully.').catch(e=>$('blogMsg').textContent=e.message)};
 $('artistForm').onsubmit=e=>{e.preventDefault();$('artistMsg').textContent='Saving…';save('artists',{title:$('artistTitle').value.trim(),category:$('artistRole').value.trim()||'Artist',imageUrl:$('artistImage').value.trim(),bio:$('artistBio').value.trim(),description:$('artistBio').value.trim(),platforms:getRows('artistLinks'),published:$('artistPub').checked}).then(()=>$('artistMsg').textContent='Saved successfully.').catch(e=>$('artistMsg').textContent=e.message)};
 ['music','vlogs','blogs','artists'].forEach(t=>$(t==='vlogs'?'vlogCancel':t==='blogs'?'blogCancel':t==='artists'?'artistCancel':'musicCancel').onclick=()=>reset(t));async function counts(){const all=await Promise.all(['music','vlogs','blogs','artists'].map(t=>getDocs(collection(db,t))));['mMusic','mVlogs','mBlogs','mArtists'].forEach((id,i)=>$(id).textContent=all[i].size)}document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.side button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));$(b.dataset.view).classList.add('active');if(labels[b.dataset.view])load(b.dataset.view)});document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>document.querySelector(`[data-view="${b.dataset.go}"]`).click());
-$('loginBtn').onclick=async()=>{try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(e){$('loginMsg').textContent='Login failed. Check your email and password.'}};$('logout').onclick=()=>signOut(auth);onAuthStateChanged(auth,u=>{if(u){$('login').classList.add('hidden');$('studio').classList.remove('hidden');counts();['music','vlogs','blogs','artists'].forEach(load)}else{$('studio').classList.add('hidden');$('login').classList.remove('hidden')}});
+$('loginBtn').onclick=async()=>{try{sessionStorage.removeItem(ADMIN_LEFT_KEY);await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(e){$('loginMsg').textContent='Login failed. Check your email and password.'}};$('logout').onclick=()=>{sessionStorage.removeItem(ADMIN_LEFT_KEY);signOut(auth)};onAuthStateChanged(auth,u=>{const left=(()=>{try{return sessionStorage.getItem(ADMIN_LEFT_KEY)==='1'}catch(e){return false}})();if(left){sessionStorage.removeItem(ADMIN_LEFT_KEY);if(u)signOut(auth);$('studio').classList.add('hidden');$('login').classList.remove('hidden');return}if(u){$('login').classList.add('hidden');$('studio').classList.remove('hidden');counts();['music','vlogs','blogs','artists'].forEach(load)}else{$('studio').classList.add('hidden');$('login').classList.remove('hidden')}});
 </script></body></html>
