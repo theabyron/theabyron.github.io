@@ -13,8 +13,28 @@
 </main></div></div>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";import{getFirestore,collection,addDoc,getDocs,query,orderBy,serverTimestamp,deleteDoc,doc,updateDoc,getDoc}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";import{FIREBASE_CONFIG}from"../firebase-config.js";
-const app=initializeApp(FIREBASE_CONFIG),auth=getAuth(app),db=getFirestore(app);const $=id=>document.getElementById(id);const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));let edit={music:null,vlogs:null,blogs:null,artists:null};
-// Set this after deploying worker.js. Example: https://the-abyron-image-upload.<your-subdomain>.workers.dev
+const app=initializeApp(FIREBASE_CONFIG),auth=getAuth(app),db=getFirestore(app);
+
+// Auto logout...
+let backgroundLogoutTimer = null;
+
+document.addEventListener("visibilitychange", async () => {
+  if (document.visibilityState === "hidden") {
+    backgroundLogoutTimer = setTimeout(async () => {
+      try {
+        await signOut(auth);
+      } catch (e) {
+        console.error("Auto logout failed:", e);
+      }
+    }, 1000);
+  } else {
+    clearTimeout(backgroundLogoutTimer);
+    backgroundLogoutTimer = null;
+  }
+});
+
+const $=id=>document.getElementById(id);const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));let edit={music:null,vlogs:null,blogs:null,artists:null};
+// Set this after deploying worker.js. Examconst UPLOAD_ENDPOINT=\"https://the-abyron-upload.ankusharya82654.workers.dev\";ple: https://the-abyron-image-upload.<your-subdomain>.workers.dev
 const UPLOAD_ENDPOINT="https://the-abyron-upload.ankusharya82654.workers.dev";
 async function uploadImage(file,type){if(!file)throw new Error("Choose an image first.");if(file.size>8*1024*1024)throw new Error("Image must be 8 MB or smaller.");if(!/^image\/(jpeg|png|webp)$/.test(file.type))throw new Error("Only JPG, PNG and WEBP images are allowed.");const u=await auth.currentUser?.getIdToken();if(!u)throw new Error("Admin session expired. Login again.");if(UPLOAD_ENDPOINT.includes("YOUR_"))throw new Error("Upload endpoint is not configured yet.");const fd=new FormData();fd.append("file",file);fd.append("type",type);const r=await fetch(UPLOAD_ENDPOINT,{method:"POST",headers:{Authorization:"Bearer "+u},body:fd});const data=await r.json().catch(()=>({}));if(!r.ok||!data.url)throw new Error(data.error||"Upload failed.");return data.url}
 async function doUpload(type){const map={music:["musicImageFile","musicImage","musicImagePreview","musicUploadStatus"],vlogs:["vlogImageFile","vlogImage","vlogImagePreview","vlogUploadStatus"],blogs:["blogImageFile","blogImage","blogImagePreview","blogUploadStatus"],artists:["artistImageFile","artistImage","artistImagePreview","artistUploadStatus"]};const [f,i,p,s]=map[type];const file=$(f).files[0];$(s).textContent="Uploading…";try{const url=await uploadImage(file,type);$(i).value=url;$(p).src=url;$(p).style.display="block";$(s).textContent="✓ Uploaded: "+url}catch(e){$(s).textContent="✕ "+e.message}}
