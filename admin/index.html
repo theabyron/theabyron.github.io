@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE ABYRON — Private Admin</title>
+<link rel="icon" href="../assets/the-abyron-favicon.png">
+<style>
+:root{--bg:#070706;--panel:#11110f;--line:#302b24;--text:#f4ead9;--muted:#999;--gold:#d8bd8d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}.wrap{max-width:1000px;margin:auto;padding:22px 16px}.top{display:flex;gap:14px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:16px}.logo{width:150px;height:44px;object-fit:contain}.spacer{margin-left:auto}button{background:var(--gold);color:#111;border:0;border-radius:4px;padding:11px 15px;font-weight:700;cursor:pointer}button.secondary{background:transparent;color:var(--gold);border:1px solid var(--line)}button.danger{background:#2a1818;color:#f2b2b2;border:1px solid #4d2828}input,textarea,select{width:100%;background:#090908;color:#fff;border:1px solid #3c352d;border-radius:4px;padding:12px;margin:6px 0 14px}textarea{min-height:110px;resize:vertical}.panel{margin-top:18px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:6px}.hidden{display:none}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.tabs button.active{outline:2px solid var(--gold)}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.check{display:flex;align-items:center;gap:8px;margin:4px 0 14px;color:#ccc}.check input{width:auto;margin:0}.item{border:1px solid var(--line);padding:14px;margin:10px 0;border-radius:5px;display:flex;gap:14px;align-items:center}.item-main{flex:1}.status{font-size:12px;color:var(--gold)}.muted,.msg{color:var(--muted)}.msg{min-height:20px}.actions{display:flex;gap:7px;flex-wrap:wrap}@media(max-width:700px){.row{grid-template-columns:1fr}.item{align-items:flex-start;flex-direction:column}.actions{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><img class="logo" src="../assets/the-abyron-logo.png" alt="THE ABYRON"><b>PRIVATE ADMIN</b><span class="spacer"></span><button id="logout" class="secondary">Logout</button></header>
+
+<section id="login" class="panel">
+<h2>Admin Login</h2><p class="muted">Only the authorised THE ABYRON Firebase account can manage this site.</p>
+<input id="email" type="email" placeholder="Admin email" autocomplete="username">
+<input id="password" type="password" placeholder="Password" autocomplete="current-password">
+<button id="loginBtn">Login</button><p id="loginMsg" class="msg"></p>
+</section>
+
+<section id="app" class="hidden">
+<div class="tabs">
+<button data-c="music" class="active">Music</button><button data-c="vlogs">Vlogs</button><button data-c="blogs">Blog</button><button data-c="artists">Artists</button>
+</div>
+
+<div class="panel">
+<h2 id="formHeading">Add Music</h2>
+<form id="form">
+<div class="row"><div><label>Title</label><input id="title" required></div><div><label>Category</label><input id="category" placeholder="Single, Album, Announcement…"></div></div>
+<label>Description</label><textarea id="description"></textarea>
+<div class="row"><div><label>Image URL</label><input id="imageUrl" placeholder="https://…"></div><div><label>Video / Spotify / Article URL</label><input id="link" placeholder="https://…"></div></div>
+<label class="check"><input id="published" type="checkbox" checked> Publish now</label>
+<div class="actions"><button id="saveBtn">Save</button><button type="button" id="cancelBtn" class="secondary hidden">Cancel edit</button></div>
+<p id="msg" class="msg"></p>
+</form>
+</div>
+
+<div class="panel"><h2 id="listHeading">Music</h2><div id="list"></div></div>
+</section>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, deleteDoc, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import { FIREBASE_CONFIG } from "../firebase-config.js";
+
+const configReady = FIREBASE_CONFIG.apiKey && !FIREBASE_CONFIG.apiKey.startsWith("PASTE_") && FIREBASE_CONFIG.projectId && !FIREBASE_CONFIG.projectId.startsWith("PASTE_");
+const loginBox=document.getElementById("login"), appBox=document.getElementById("app"), loginBtn=document.getElementById("loginBtn"), loginMsg=document.getElementById("loginMsg"), logout=document.getElementById("logout");
+const form=document.getElementById("form"), msg=document.getElementById("msg"), list=document.getElementById("list"), formHeading=document.getElementById("formHeading"), listHeading=document.getElementById("listHeading"), cancelBtn=document.getElementById("cancelBtn"), saveBtn=document.getElementById("saveBtn");
+let auth,db,type="music",editingId=null;
+
+const labels={music:"Music",vlogs:"Vlogs",blogs:"Blog",artists:"Artists"};
+function resetForm(){editingId=null;form.reset();published.checked=true;cancelBtn.classList.add("hidden");saveBtn.textContent="Save";formHeading.textContent="Add "+labels[type];msg.textContent="";}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));}
+
+if(!configReady){loginMsg.textContent="Firebase config is not connected yet. Fill firebase-config.js from Firebase Console first.";loginBtn.disabled=true;}
+else{
+ const firebaseApp=initializeApp(FIREBASE_CONFIG); auth=getAuth(firebaseApp); db=getFirestore(firebaseApp);
+ loginBtn.onclick=async()=>{loginMsg.textContent="";try{await signInWithEmailAndPassword(auth,email.value.trim(),password.value)}catch(e){loginMsg.textContent="Login failed. Check email/password."}};
+ logout.onclick=()=>signOut(auth);
+ onAuthStateChanged(auth,u=>{loginBox.classList.toggle("hidden",!!u);appBox.classList.toggle("hidden",!u);logout.classList.toggle("hidden",!u);if(u){resetForm();load();}});
+}
+
+document.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-c]").forEach(x=>x.classList.remove("active"));b.classList.add("active");type=b.dataset.c;resetForm();load();});
+cancelBtn.onclick=resetForm;
+
+form.onsubmit=async e=>{e.preventDefault();if(!auth?.currentUser)return;msg.textContent="Saving…";try{
+ const data={title:title.value.trim(),category:category.value.trim(),description:description.value.trim(),imageUrl:imageUrl.value.trim(),link:link.value.trim(),published:published.checked,updatedAt:serverTimestamp()};
+ if(editingId){await updateDoc(doc(db,type,editingId),data);msg.textContent="Updated successfully.";}else{data.createdAt=serverTimestamp();await addDoc(collection(db,type),data);msg.textContent="Saved successfully.";}
+ resetForm();await load();
+}catch(e){msg.textContent="Could not save: "+e.message;}};
+
+async function load(){if(!db||!auth?.currentUser)return;list.innerHTML="Loading…";try{const snap=await getDocs(query(collection(db,type),orderBy("createdAt","desc")));if(snap.empty){list.innerHTML='<p class="muted">Nothing here yet.</p>';return;}list.innerHTML=[...snap.docs].map(d=>{const x=d.data();return `<div class="item"><div class="item-main"><strong>${esc(x.title)}</strong><div class="status">${x.published?"Published":"Draft"}${x.category?" · "+esc(x.category):""}</div><div class="muted">${esc(x.description||"")}</div></div><div class="actions"><button class="secondary" data-edit="${d.id}">Edit</button><button class="danger" data-delete="${d.id}">Delete</button></div></div>`}).join("");
+ list.querySelectorAll("[data-delete]").forEach(b=>b.onclick=async()=>{if(confirm("Delete this item?")){await deleteDoc(doc(db,type,b.dataset.delete));load();}});
+ list.querySelectorAll("[data-edit]").forEach(b=>b.onclick=async()=>{const d=await getDoc(doc(db,type,b.dataset.edit));if(!d.exists())return;const x=d.data();editingId=d.id;title.value=x.title||"";category.value=x.category||"";description.value=x.description||"";imageUrl.value=x.imageUrl||"";link.value=x.link||"";published.checked=!!x.published;formHeading.textContent="Edit "+labels[type];saveBtn.textContent="Update";cancelBtn.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});});
+ listHeading.textContent=labels[type];
+}catch(e){list.innerHTML='<p class="muted">Could not load content. Check Firebase rules and config.</p>';}}
+</script>
+</body></html>
