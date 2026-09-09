@@ -15,24 +15,46 @@
 import{initializeApp}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";import{getFirestore,collection,addDoc,getDocs,query,orderBy,serverTimestamp,deleteDoc,doc,updateDoc,getDoc}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";import{FIREBASE_CONFIG}from"../firebase-config.js";
 const app=initializeApp(FIREBASE_CONFIG),auth=getAuth(app),db=getFirestore(app);
 
-// Auto logout...
+// Admin security: logout when leaving/backgrounding the page
 let backgroundLogoutTimer = null;
+let pageWasLeft = false;
 
-document.addEventListener("visibilitychange", async () => {
+async function forceAdminLogout() {
+  try {
+    await signOut(auth);
+  } catch (e) {
+    console.error("Logout failed:", e);
+  }
+}
+
+// Detect background
+document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") {
-    backgroundLogoutTimer = setTimeout(async () => {
-      try {
-        await signOut(auth);
-      } catch (e) {
-        console.error("Auto logout failed:", e);
-      }
+    pageWasLeft = true;
+
+    backgroundLogoutTimer = setTimeout(() => {
+      forceAdminLogout();
     }, 1000);
-  } else {
-    clearTimeout(backgroundLogoutTimer);
-    backgroundLogoutTimer = null;
   }
 });
 
+// Detect leaving the page / Back / Forward / navigation
+window.addEventListener("pagehide", () => {
+  pageWasLeft = true;
+
+  if (backgroundLogoutTimer) {
+    clearTimeout(backgroundLogoutTimer);
+  }
+
+  forceAdminLogout();
+});
+
+// If browser restores the page from BFCache
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted || pageWasLeft) {
+    forceAdminLogout();
+  }
+});
 const $=id=>document.getElementById(id);const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));let edit={music:null,vlogs:null,blogs:null,artists:null};
 // Set this after deploying worker.js. Examconst UPLOAD_ENDPOINT=\"https://the-abyron-upload.ankusharya82654.workers.dev\";ple: https://the-abyron-image-upload.<your-subdomain>.workers.dev
 const UPLOAD_ENDPOINT="https://the-abyron-upload.ankusharya82654.workers.dev";
