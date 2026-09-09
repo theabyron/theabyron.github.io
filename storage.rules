@@ -1,0 +1,11 @@
+// Not used in the free/Spark version because Cloud Storage is not enabled.
+// Keep this file only as a future reference if Storage is enabled later.
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read: if false;
+      allow write: if false;
+    }
+  }
+}
