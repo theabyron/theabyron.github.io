@@ -1,5 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>THE ABYRON — Studio</title><link rel="icon" href="../assets/the-abyron-favicon.png"><style>
 :root{--bg:#070706;--panel:#11100f;--line:#302a23;--text:#f4ead9;--muted:#999187;--gold:#d8bd8d;--danger:#c97878}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}button,input,textarea,select{font:inherit}.shell{min-height:100vh}.top{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 5%;gap:16px;position:sticky;top:0;background:#070706ee;backdrop-filter:blur(10px);z-index:5}.logo{width:130px;height:45px;object-fit:contain}.top b{font-size:10px;letter-spacing:.25em;color:var(--gold)}.spacer{margin-left:auto}.top button{border:1px solid var(--line);background:transparent;color:var(--gold);padding:9px 13px;cursor:pointer}.layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 76px)}aside{border-right:1px solid var(--line);padding:28px 16px}.side-kicker{font-size:9px;letter-spacing:.3em;color:#777;margin:0 12px 14px}.side button{width:100%;background:transparent;color:#aaa;border:0;text-align:left;padding:12px;border-radius:4px;cursor:pointer}.side button:hover,.side button.active{background:#171512;color:var(--gold)}main{max-width:1200px;width:100%;padding:38px 5% 70px}.view{display:none}.view.active{display:block}.title{font:clamp(42px,6vw,70px) Georgia,serif;margin:0 0 7px}.sub{color:#888;font-size:13px;margin:0 0 30px}.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric{border:1px solid var(--line);background:var(--panel);padding:20px}.metric strong{font:34px Georgia,serif;display:block}.metric span{font-size:9px;letter-spacing:.15em;color:#777;text-transform:uppercase}.quick{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.quick button,.primary{border:1px solid var(--gold);background:var(--gold);color:#111;padding:14px;cursor:pointer;text-align:left}.quick button.alt{background:var(--panel);color:var(--text);border-color:var(--line)}.panel{border:1px solid var(--line);background:var(--panel);padding:22px;margin-bottom:18px}.panel h2{font:28px Georgia,serif;margin:0 0 18px}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin-bottom:14px}.field label{display:block;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#999;margin-bottom:6px}input,textarea,select{width:100%;background:#090908;border:1px solid #3d362e;color:#fff;padding:12px;border-radius:3px;outline:none}textarea{min-height:110px;resize:vertical}.check{display:flex;align-items:center;gap:8px;color:#bbb;font-size:13px}.check input{width:auto}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.btn{padding:11px 15px;border:1px solid var(--gold);background:var(--gold);color:#111;cursor:pointer;font-weight:700}.btn.secondary{background:transparent;color:var(--gold);border-color:var(--line)}.btn.danger{background:transparent;color:#e6a4a4;border-color:#512c2c}.msg{color:#999;min-height:20px;font-size:12px}.items{display:grid;gap:10px}.item{display:grid;grid-template-columns:78px 1fr auto;gap:15px;align-items:center;border:1px solid var(--line);padding:12px;background:#0d0c0b}.thumb{width:78px;height:58px;object-fit:cover;background:#191713}.item h3{font:22px Georgia,serif;margin:0 0 4px}.item p{margin:0;color:#888;font-size:12px}.tag{font-size:8px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase}.item-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.help{color:#777;font-size:11px;line-height:1.6}.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.login{max-width:430px;margin:10vh auto;padding:30px;border:1px solid var(--line);background:var(--panel)}.login img{width:170px}.hidden{display:none!important}.preview{margin-top:8px;color:#777;font-size:11px}.upload-box{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}.upload-status{margin-top:8px;font-size:11px;color:#999;min-height:18px}.image-preview{display:none;max-width:180px;max-height:180px;object-fit:cover;border:1px solid var(--line);margin-top:10px}.notice{padding:13px;border:1px dashed #4a4035;color:#9f968a;font-size:11px;line-height:1.55}@media(max-width:850px){.layout{grid-template-columns:1fr}aside{position:sticky;top:76px;z-index:4;overflow:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px}.side{display:flex;gap:5px;min-width:max-content}.side-kicker{display:none}.side button{width:auto;white-space:nowrap}.dash-grid{grid-template-columns:1fr 1fr}.quick{grid-template-columns:1fr}.row,.link-grid{grid-template-columns:1fr}.item{grid-template-columns:60px 1fr}.thumb{width:60px;height:55px}.item-actions{grid-column:1/-1;justify-content:flex-start}.upload-box{grid-template-columns:1fr}}@media(max-width:500px){main{padding:25px 4% 50px}.top b{display:none}}
+.target-list{display:grid;gap:8px;padding:10px;border:1px solid var(--line);background:#0d0c0a}.target-list .check{margin:0}.target-list input{accent-color:var(--gold)}
 </style></head><body>
 <div id="studioIntro" aria-hidden="true"><div class="studio-intro-ring"></div><img src="../assets/the-abyron-logo.png" alt="THE ABYRON"><div>PRIVATE STUDIO</div></div>
 <div id="login" class="login">
@@ -144,6 +145,7 @@
       <div class="field" id="igMediaField"><label id="igMediaLabel">Upload photo</label><div class="upload-box"><input id="igMediaFile" type="file" accept="image/jpeg,image/png,image/webp"><button type="button" class="btn secondary" id="igUpload">Upload file</button></div><input id="igMediaUrl" class="hidden"><div id="igUploadStatus" class="upload-status"></div></div>
       <div class="field"><label>Caption</label><textarea id="igCaption" placeholder="Caption / post copy"></textarea></div>
       <div class="row"><div class="field"><label>Story text</label><textarea id="igStory" placeholder="Optional Story text"></textarea></div><div class="field"><label>Note text</label><textarea id="igNote" placeholder="Optional Instagram Note text"></textarea></div></div>
+      <div class="field"><label>Artist accounts</label><div id="igArtistTargets" class="target-list"><div class="help">Loading artists…</div></div><p class="help">Tick the artist account(s) this content is for.</p></div>
       <div class="field"><label>Optional external URL</label><input id="igLink" placeholder="Instagram post/reel/story link or other URL"></div>
       <label class="check"><input id="igPub" type="checkbox" checked> Keep in studio archive</label>
       <div class="actions"><button class="btn">Save Instagram content</button></div><p id="igMsg" class="msg"></p>
@@ -282,7 +284,7 @@ function showPage(name){
   window.scrollTo({top:0,behavior:"smooth"});
   if(["music","vlogs","blogs","artists"].includes(name))load(name);
   if(name==="photos")loadPhotos();
-  if(name==="instagram")loadInstagram();
+  if(name==="instagram"){loadInstagram();loadInstagramArtists([]);}
 }
 document.querySelectorAll(".side button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
 
@@ -346,11 +348,53 @@ $("uploadPhotos").onclick=async()=>{
 
 
 const igAccept={photo:"image/jpeg,image/png,image/webp",video:"video/mp4,video/webm,video/quicktime",song:"audio/mpeg,audio/mp4,audio/wav,audio/ogg",story:"image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime",note:""};
+const igAllowed={photo:["image/jpeg","image/png","image/webp"],video:["video/mp4","video/webm","video/quicktime"],song:["audio/mpeg","audio/mp4","audio/wav","audio/ogg"],story:["image/jpeg","image/png","image/webp","video/mp4","video/webm","video/quicktime"],note:[]};
 function updateIgType(){const t=$("igType").value;const f=$("igMediaField");const label=$("igMediaLabel");if(t==="note"){f.style.display="none";return}f.style.display="block";label.textContent=t==="photo"?"Upload photo":t==="video"?"Upload video / Reel":t==="song"?"Upload song / audio":"Optional Story media";$("igMediaFile").accept=igAccept[t]||"";$("igMediaFile").value="";$("igMediaUrl").value="";$("igUploadStatus").textContent=""}
 $("igType").onchange=updateIgType;updateIgType();
-$("igUpload").onclick=async()=>{const t=$("igType").value, file=$("igMediaFile").files[0];if(t==="note")return;if(!file){$("igUploadStatus").textContent="✕ Choose a file first.";return}$("igUploadStatus").textContent="Uploading…";try{const url=await uploadAsset(file,"instagram-"+t);$("igMediaUrl").value=url;$("igUploadStatus").textContent="✓ Uploaded."}catch(e){$("igUploadStatus").textContent="✕ "+e.message}};
-async function loadInstagram(){const box=$("instagramItems");if(!box)return;box.innerHTML='<div class="help">Loading…</div>';try{const s=await getDocs(query(collection(db,"instagram"),orderBy("createdAt","desc")));box.innerHTML=s.empty?'<div class="help">No Instagram content yet.</div>':[...s.docs].map(d=>{const x=d.data();return `<div class="item"><div class="thumb"></div><div><div class="tag">${esc(x.type||"content")} · ${x.published===false?"Draft":"Saved"}</div><h3>${esc(x.title||"Untitled")}</h3><p>${esc((x.caption||x.story||x.note||"").slice(0,150))}</p></div><div class="item-actions">${x.mediaUrl?`<a class="btn secondary" href="${esc(x.mediaUrl)}" target="_blank">Open media</a>`:""}</div></div>`}).join("")}catch(e){box.innerHTML='<div class="help">Could not load Instagram archive.</div>'}}
-$("instagramForm").onsubmit=async e=>{e.preventDefault();try{const type=$("igType").value;await addDoc(collection(db,"instagram"),{type,title:$("igTitle").value.trim(),mediaUrl:$("igMediaUrl").value.trim(),caption:$("igCaption").value.trim(),story:$("igStory").value.trim(),note:$("igNote").value.trim(),link:$("igLink").value.trim(),published:$("igPub").checked,createdAt:serverTimestamp()});$("igMsg").textContent="✓ Saved to Instagram archive.";$("instagramForm").reset();$("igType").value="photo";updateIgType();await loadInstagram()}catch(e){$("igMsg").textContent=e.message}};
+$("igUpload").onclick=async()=>{const t=$("igType").value, file=$("igMediaFile").files[0];if(t==="note")return;if(!file){$("igUploadStatus").textContent="✕ Choose a file first.";return}const ok=igAllowed[t]||[];if(file.type && !ok.includes(file.type)){$("igUploadStatus").textContent="✕ Wrong file type for "+t+". Please choose a supported file.";return}$("igUploadStatus").textContent="Uploading…";try{const url=await uploadAsset(file,"instagram-"+t);$("igMediaUrl").value=url;$("igUploadStatus").textContent="✓ Uploaded."}catch(e){$("igUploadStatus").textContent="✕ "+e.message}};
+async function loadInstagram(){
+ const box=$("instagramItems"); if(!box)return;
+ box.innerHTML='<div class="help">Loading…</div>';
+ try{
+  const [igSnap,artistSnap]=await Promise.all([
+   getDocs(query(collection(db,"instagram"),orderBy("createdAt","desc"))),
+   getDocs(collection(db,"artists"))
+  ]);
+  const amap={}; artistSnap.forEach(d=>amap[d.id]=d.data());
+  box.innerHTML=igSnap.empty?'<div class="help">No Instagram content yet.</div>':[...igSnap.docs].map(d=>{
+   const x=d.data(), ids=Array.isArray(x.artistIds)?x.artistIds:[];
+   const names=ids.map(id=>amap[id]?.title||amap[id]?.name).filter(Boolean);
+   return `<div class="item"><div class="thumb"></div><div><div class="tag">${esc(x.type||"content")} · ${x.published===false?"Draft":"Saved"}</div><h3>${esc(x.title||"Untitled")}</h3><p>${esc((x.caption||x.story||x.note||"").slice(0,150))}</p><p class="help">Artists: ${esc(names.length?names.join(", "):"None selected")}</p></div><div class="item-actions">${x.mediaUrl?`<a class="btn secondary" href="${esc(x.mediaUrl)}" target="_blank">Open media</a>`:""}<button class="btn secondary" type="button" onclick="editInstagram('${d.id}')">Edit</button><button class="btn secondary" type="button" onclick="deleteInstagram('${d.id}')">Delete</button></div></div>`
+  }).join("");
+ }catch(e){box.innerHTML='<div class="help">Could not load Instagram archive.</div>';}
+}
+async function loadInstagramArtists(selected=[]){
+ const box=$("igArtistTargets"); if(!box)return;
+ try{
+  const snap=await getDocs(collection(db,"artists"));
+  box.innerHTML=snap.empty?'<div class="help">No artists found. Add artists first.</div>':[...snap.docs].map(d=>{const x=d.data(); const checked=selected.includes(d.id)?"checked":""; const label=x.title||x.name||"Unnamed artist"; return `<label class="check"><input type="checkbox" class="ig-artist" value="${d.id}" ${checked}> ${esc(label)}${x.email?` <span class="help">· ${esc(x.email)}</span>`:""}</label>`}).join("");
+ }catch(e){box.innerHTML='<div class="help">Could not load artists.</div>';}
+}
+function getSelectedInstagramArtists(){return [...document.querySelectorAll('.ig-artist:checked')].map(x=>x.value)}
+async function editInstagram(id){
+ try{
+  const snap=await getDoc(doc(db,"instagram",id)); if(!snap.exists())return;
+  const x=snap.data(); window.igEditId=id;
+  $("igType").value=x.type||"photo"; $("igTitle").value=x.title||""; $("igMediaUrl").value=x.mediaUrl||""; $("igCaption").value=x.caption||""; $("igStory").value=x.story||""; $("igNote").value=x.note||""; $("igLink").value=x.link||""; $("igPub").checked=x.published!==false;
+  updateIgType(); await loadInstagramArtists(Array.isArray(x.artistIds)?x.artistIds:[]);
+  $("igMsg").textContent="Editing saved Instagram content. Save to update it."; window.scrollTo({top:0,behavior:"smooth"});
+ }catch(e){alert('Could not edit Instagram content: '+e.message)}
+}
+async function deleteInstagram(id){
+ if(!confirm('Delete this Instagram content from the studio archive?'))return;
+ try{await deleteDoc(doc(db,"instagram",id)); if(window.igEditId===id)window.igEditId=null; await loadInstagram();}catch(e){alert('Could not delete Instagram content: '+e.message)}
+}
+$("instagramForm").onsubmit=async e=>{e.preventDefault();try{
+ const payload={type:$('igType').value,title:$('igTitle').value.trim(),mediaUrl:$('igMediaUrl').value.trim(),caption:$('igCaption').value.trim(),story:$('igStory').value.trim(),note:$('igNote').value.trim(),link:$('igLink').value.trim(),artistIds:getSelectedInstagramArtists(),published:$('igPub').checked,updatedAt:serverTimestamp()};
+ if(window.igEditId){await updateDoc(doc(db,"instagram",window.igEditId),payload);$("igMsg").textContent="✓ Instagram content updated.";window.igEditId=null;}else{payload.createdAt=serverTimestamp();await addDoc(collection(db,"instagram"),payload);$("igMsg").textContent="✓ Saved to Instagram archive.";}
+ $("instagramForm").reset();$("igType").value="photo";updateIgType();await loadInstagramArtists([]);await loadInstagram();
+ }catch(e){$("igMsg").textContent=e.message}};
+
 
 $("loginBtn").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value)}catch(e){$("loginMsg").textContent="Login failed. Check your email and password."}};
 $("logout").onclick=()=>signOut(auth);
