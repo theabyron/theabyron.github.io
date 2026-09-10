@@ -64,7 +64,8 @@ async function verifyFirebaseToken(token, env) {
   if (!r.ok || !d.users?.[0]) throw new Error("Invalid admin session.");
 
   const uid = d.users[0].localId;
-  if (env.ADMIN_UID && uid !== env.ADMIN_UID) throw new Error("Not authorized.");
+  if (!env.ADMIN_UID) throw new Error("ADMIN_UID is not configured in Worker Variables.");
+  if (uid !== env.ADMIN_UID) throw new Error("Not authorized.");
   return uid;
 }
 
