@@ -41,7 +41,15 @@ function safeName(name){
 function ext(type,name){
   if(type==="image/jpeg"||/\.jpe?g$/i.test(name))return ".jpg";
   if(type==="image/png"||/\.png$/i.test(name))return ".png";
-  return ".webp";
+  if(type==="image/webp"||/\.webp$/i.test(name))return ".webp";
+  if(type==="video/mp4"||/\.mp4$/i.test(name))return ".mp4";
+  if(type==="video/webm"||/\.webm$/i.test(name))return ".webm";
+  if(type==="video/quicktime"||/\.mov$/i.test(name))return ".mov";
+  if(type==="audio/mpeg"||/\.mp3$/i.test(name))return ".mp3";
+  if(type==="audio/mp4"||/\.m4a$/i.test(name))return ".m4a";
+  if(type==="audio/wav"||/\.wav$/i.test(name))return ".wav";
+  if(type==="audio/ogg"||/\.ogg$/i.test(name))return ".ogg";
+  return ".bin";
 }
 
 export default {
@@ -56,9 +64,11 @@ export default {
 
       const form=await request.formData();
       const file=form.get("file"), type=String(form.get("type")||"general");
-      if(!(file instanceof File))throw new Error("No image file received.");
-      if(file.size>8*1024*1024)throw new Error("Image must be 8 MB or smaller.");
-      if(!["image/jpeg","image/png","image/webp"].includes(file.type))throw new Error("Only JPG, PNG and WEBP images are allowed.");
+      if(!(file instanceof File))throw new Error("No file received.");
+      const allowed=["image/jpeg","image/png","image/webp","video/mp4","video/webm","video/quicktime","audio/mpeg","audio/mp4","audio/wav","audio/ogg"];
+      if(!allowed.includes(file.type))throw new Error("Unsupported file type. Use JPG/PNG/WEBP, MP4/WEBM/MOV or MP3/M4A/WAV/OGG.");
+      const maxBytes=file.type.startsWith("image/")?8*1024*1024:25*1024*1024;
+      if(file.size>maxBytes)throw new Error(`File must be ${file.type.startsWith("image/")?8:25} MB or smaller.`);
 
       const base=safeName(file.name.replace(/\.[^.]+$/,""));
       const extension=ext(file.type,file.name);
@@ -71,7 +81,7 @@ export default {
       const chunk=0x8000;
       for(let i=0;i<bytes.length;i+=chunk)binary+=String.fromCharCode(...bytes.subarray(i,i+chunk));
       const content=btoa(binary);
-      await github(path,{method:"PUT",body:JSON.stringify({message:`Upload ${type} image ${filename}`,content,branch:GITHUB_BRANCH})});
+      await github(path,{method:"PUT",body:JSON.stringify({message:`Upload ${type} ${filename}`,content,branch:GITHUB_BRANCH})});
       return json({ok:true,url:`https://${GITHUB_OWNER}.github.io/${path}`},200,origin);
     }catch(e){return json({error:e.message||"Upload failed."},400,origin)}
   }
