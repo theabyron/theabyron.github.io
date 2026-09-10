@@ -66,7 +66,7 @@
       <button type="button" id="dashLink">Link</button>
     </div>
     <div id="dashboardEditor" class="rich-editor" contenteditable="true"></div>
-    <div class="actions"><button class="btn" id="saveDashboard">Save Dashboard</button></div>
+    <div class="actions"><button class="btn" id="saveDashboard">Save Dashboard</button><button type="button" class="btn secondary" id="dashboardVisibility">Visibility</button></div>
     <p id="dashboardMsg" class="msg"></p>
   </div>
 </section>
@@ -172,7 +172,7 @@
 .page-kicker{font-size:9px;letter-spacing:.34em;color:var(--gold);margin-bottom:10px;text-transform:uppercase}
 .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head span{font-size:9px;letter-spacing:.16em;color:#777;text-transform:uppercase}
 .record-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.record-card{border:1px solid var(--line);padding:16px;background:#0d0c0b}.record-card b{font:23px Georgia,serif;display:block;margin-bottom:5px}.record-card small{color:#777}
-.toolbar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}.toolbar button{background:#0b0a09;border:1px solid var(--line);color:var(--gold);padding:7px 10px;cursor:pointer}.rich-editor{min-height:210px;border:1px solid #3d362e;background:#090908;padding:18px;line-height:1.7;outline:none}.rich-editor:focus{border-color:var(--gold)}.rich-editor h2,.rich-editor h3{font-family:Georgia,serif}.photo-admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.photo-admin{border:1px solid var(--line);background:#0d0c0b;overflow:hidden}.photo-admin img{width:100%;aspect-ratio:1;object-fit:cover;display:block}.photo-admin .photo-url{padding:8px;font-size:9px;color:#777;word-break:break-all}.photo-meta{padding:10px 10px 0;display:flex;justify-content:space-between;gap:8px;align-items:center}.photo-meta b{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.photo-actions{display:flex;gap:7px;padding:10px}.photo-actions .btn{padding:8px 11px}
+.toolbar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}.toolbar button{background:#0b0a09;border:1px solid var(--line);color:var(--gold);padding:7px 10px;cursor:pointer}.rich-editor{min-height:210px;border:1px solid #3d362e;background:#090908;padding:18px;line-height:1.7;outline:none}.rich-editor:focus{border-color:var(--gold)}.rich-editor h2,.rich-editor h3{font-family:Georgia,serif}.visibility-modal{position:fixed;inset:0;background:#000b;z-index:200;display:none;align-items:center;justify-content:center;padding:20px}.visibility-modal.open{display:flex}.visibility-box{width:min(520px,94vw);background:#11100e;border:1px solid #4b4135;padding:26px;box-shadow:0 20px 80px #000}.visibility-box h2{font:32px Georgia,serif;margin:0 0 18px}.visibility-options{display:grid;gap:10px}.visibility-option{border:1px solid #3a332b;background:#0b0a09;padding:14px;cursor:pointer}.visibility-option.active{border-color:var(--gold);background:#17130f}.visibility-option strong{display:block;color:var(--gold);margin-bottom:4px}.visibility-option span{font-size:12px;color:#888}.schedule-field{margin-top:14px;display:none}.schedule-field.show{display:block}.schedule-field input{width:100%;padding:12px;background:#090908;border:1px solid #40382f;color:var(--text)}.visibility-actions{display:flex;gap:8px;margin-top:18px;justify-content:flex-end}.status-public{color:#d8bd8d}.status-private{color:#999}.status-scheduled{color:#d7a6a6}.photo-admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.photo-admin{border:1px solid var(--line);background:#0d0c0b;overflow:hidden}.photo-admin img{width:100%;aspect-ratio:1;object-fit:cover;display:block}.photo-admin .photo-url{padding:8px;font-size:9px;color:#777;word-break:break-all}.photo-meta{padding:10px 10px 0;display:flex;justify-content:space-between;gap:8px;align-items:center}.photo-meta b{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.photo-actions{display:flex;gap:7px;padding:10px}.photo-actions .btn{padding:8px 11px}
 .view{display:none!important;opacity:0;transform:translateY(25px) scale(.985)}.view.active{display:block!important;animation:pageIn .55s cubic-bezier(.2,.8,.2,1) both}
 .view.page-music.active{animation:musicIn .58s cubic-bezier(.16,1,.3,1) both}.view.page-vlogs.active{animation:vlogIn .62s cubic-bezier(.16,1,.3,1) both}.view.page-blogs.active{animation:blogIn .56s cubic-bezier(.16,1,.3,1) both}.view.page-artists.active{animation:artistIn .62s cubic-bezier(.16,1,.3,1) both}.view.page-photos.active{animation:photoIn .7s cubic-bezier(.16,1,.3,1) both}.view.page-contact.active{animation:contactIn .65s cubic-bezier(.16,1,.3,1) both}.view.page-settings.active{animation:settingsIn .55s cubic-bezier(.16,1,.3,1) both}
 @keyframes pageIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}@keyframes musicIn{from{opacity:0;transform:translateX(-55px) skewX(-2deg)}to{opacity:1;transform:none}}@keyframes vlogIn{from{opacity:0;transform:scale(.92) rotate(-1deg)}to{opacity:1;transform:none}}@keyframes blogIn{from{opacity:0;transform:translateY(65px)}to{opacity:1;transform:none}}@keyframes artistIn{from{opacity:0;transform:translateX(55px)}to{opacity:1;transform:none}}@keyframes photoIn{from{opacity:0;transform:scale(.84) rotate(1.5deg)}to{opacity:1;transform:none}}@keyframes contactIn{from{opacity:0;transform:translateY(-45px)}to{opacity:1;transform:none}}@keyframes settingsIn{from{opacity:0;filter:blur(7px);transform:scale(.97)}to{opacity:1;filter:none;transform:none}}
@@ -182,7 +182,7 @@
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import{initializeAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut,inMemoryPersistence}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import{getFirestore,collection,addDoc,getDocs,serverTimestamp,deleteDoc,doc,updateDoc,getDoc,setDoc}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import{getFirestore,collection,addDoc,getDocs,serverTimestamp,deleteDoc,doc,updateDoc,getDoc,setDoc,Timestamp}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 import{FIREBASE_CONFIG}from"../firebase-config.js";
 
 const app=initializeApp(FIREBASE_CONFIG),auth=initializeAuth(app,{persistence:inMemoryPersistence}),db=getFirestore(app);
@@ -301,7 +301,7 @@ async function load(type){
     const docs=[...s.docs].sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));
     box.innerHTML=!docs.length?'<div class="help">Nothing here yet.</div>':docs.map(d=>{
       const x=d.data(),img=x.imageUrl||x.coverUrl||"";
-      return `<div class="item"><div>${img?`<img class="thumb" src="${esc(mediaUrl(img))}">`:'<div class="thumb"></div>'}</div><div><div class="tag">${x.published===false?"Draft":"Published"} · ${esc(x.category||type)}</div><h3>${esc(x.title||x.name||"Untitled")}</h3><p>${esc((x.description||x.bio||"").slice(0,150))}</p>${type==="artists"&&x.email?`<p class="help">✉ ${esc(x.email)}</p>`:""}</div><div class="item-actions"><button class="btn secondary" data-e="${d.id}">Edit</button><button class="btn danger" type="button" data-del="${d.id}">Delete</button></div></div>`;
+      return `<div class="item"><div>${img?`<img class="thumb" src="${esc(mediaUrl(img))}">`:'<div class="thumb"></div>'}</div><div><div class="tag">${x.published===false?"Draft":"Published"} · ${esc(x.category||type)}</div><h3>${esc(x.title||x.name||"Untitled")}</h3><p>${esc((x.description||x.bio||"").slice(0,150))}</p>${type==="artists"&&x.email?`<p class="help">✉ ${esc(x.email)}</p>`:""}</div><div class="item-actions"><button class="btn secondary" type="button" data-vis-collection="${type}" data-vis-id="${d.id}">Visibility</button><button class="btn secondary" data-e="${d.id}">Edit</button><button class="btn danger" type="button" data-del="${d.id}">Delete</button></div></div>`;
     }).join("");
     box.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>startEdit(type,b.dataset.e));
     box.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>deleteRecord(type,b.dataset.del));
@@ -362,7 +362,7 @@ async function loadPhotos(){
   try{
     const s=await getDocs(collection(db,"photos"));
     const docs=[...s.docs].sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));
-    box.innerHTML=!docs.length?'<div class="help">No photos yet.</div>':docs.map(d=>{const x=d.data();return `<div class="photo-admin"><img src="${esc(mediaUrl(x.imageUrl||""))}" loading="lazy"><div class="photo-meta"><b>${esc(x.title||"Untitled photo")}</b><span class="tag">${x.published===false?"Hidden":"Published"}</span></div><div class="photo-url">${esc(x.imageUrl||"")}</div><div class="photo-actions"><button type="button" class="btn secondary" data-photo-edit="${d.id}">Edit</button><button type="button" class="btn danger" data-photo-delete="${d.id}">Delete</button></div></div>`}).join("");
+    box.innerHTML=!docs.length?'<div class="help">No photos yet.</div>':docs.map(d=>{const x=d.data();return `<div class="photo-admin"><img src="${esc(mediaUrl(x.imageUrl||""))}" loading="lazy"><div class="photo-meta"><b>${esc(x.title||"Untitled photo")}</b><span class="tag">${x.published===false?"Hidden":"Published"}</span></div><div class="photo-url">${esc(x.imageUrl||"")}</div><div class="photo-actions"><button type="button" class="btn secondary" data-vis-collection="photos" data-vis-id="${d.id}">Visibility</button><button type="button" class="btn secondary" data-photo-edit="${d.id}">Edit</button><button type="button" class="btn danger" data-photo-delete="${d.id}">Delete</button></div></div>`}).join("");
     box.querySelectorAll('[data-photo-edit]').forEach(b=>b.onclick=()=>editPhoto(b.dataset.photoEdit));
     box.querySelectorAll('[data-photo-delete]').forEach(b=>b.onclick=()=>deletePhoto(b.dataset.photoDelete));
   }catch(e){box.innerHTML='<div class="help">Could not load photos. Check Firestore rules.</div>'}
@@ -416,7 +416,7 @@ async function loadInstagram(){
   box.innerHTML=!igDocs.length?'<div class="help">No Instagram content yet.</div>':igDocs.map(d=>{
    const x=d.data(), ids=Array.isArray(x.artistIds)?x.artistIds:[];
    const names=ids.map(id=>amap[id]?.title||amap[id]?.name).filter(Boolean);
-   return `<div class="item"><div class="thumb"></div><div><div class="tag">${esc(x.type||"content")} · ${x.published===false?"Draft":"Saved"}</div><h3>${esc(x.title||"Untitled")}</h3><p>${esc((x.caption||x.story||x.note||"").slice(0,150))}</p><p class="help">Artists: ${esc(names.length?names.join(", "):"None selected")}</p></div><div class="item-actions">${x.mediaUrl?`<a class="btn secondary" href="${esc(x.mediaUrl)}" target="_blank">Open media</a>`:""}<button class="btn secondary" type="button" data-ig-edit="${d.id}">Edit</button><button class="btn secondary" type="button" data-ig-delete="${d.id}">Delete</button></div></div>`
+   return `<div class="item"><div class="thumb"></div><div><div class="tag">${esc(x.type||"content")} · ${x.published===false?"Draft":"Saved"}</div><h3>${esc(x.title||"Untitled")}</h3><p>${esc((x.caption||x.story||x.note||"").slice(0,150))}</p><p class="help">Artists: ${esc(names.length?names.join(", "):"None selected")}</p></div><div class="item-actions">${x.mediaUrl?`<a class="btn secondary" href="${esc(x.mediaUrl)}" target="_blank">Open media</a>`:""}<button class="btn secondary" type="button" data-vis-collection="instagram" data-vis-id="${d.id}">Visibility</button><button class="btn secondary" type="button" data-ig-edit="${d.id}">Edit</button><button class="btn secondary" type="button" data-ig-delete="${d.id}">Delete</button></div></div>`
   }).join("");
   box.querySelectorAll("[data-ig-edit]").forEach(b=>b.onclick=()=>editInstagram(b.dataset.igEdit));
   box.querySelectorAll("[data-ig-delete]").forEach(b=>b.onclick=()=>deleteInstagram(b.dataset.igDelete));
@@ -450,6 +450,43 @@ $("instagramForm").onsubmit=async e=>{e.preventDefault();try{
  }catch(e){$("igMsg").textContent=e.message}};
 
 
+// UNIVERSAL VISIBILITY CONTROL: Public / Private / Exact scheduled publish time.
+let visibilityTarget=null, visibilityValue="public";
+function visibilityLabel(x){const v=x?.visibility||((x?.published===false)?"private":"public");if(v==="scheduled")return "Scheduled";return v==="private"?"Private":"Public"}
+function visibilityTime(x){return x?.publishAt?.toDate?.()||null}
+function openVisibility(collectionName,id){
+  getDoc(doc(db,collectionName,id)).then(s=>{
+    if(!s.exists())return;
+    visibilityTarget={collectionName,id};const x=s.data();visibilityValue=x.visibility||((x.published===false)?"private":"public");
+    $("visibilityTarget").textContent=`${collectionName.toUpperCase()} · ${x.title||x.name||"Untitled"}`;
+    const d=visibilityTime(x);$("publishAtInput").value=d?toLocalInputValue(d):"";setVisibilityChoice(visibilityValue);$("visibilityMsg").textContent="";$('visibilityModal').classList.add('open');
+  }).catch(e=>alert("Could not open visibility controls: "+e.message));
+}
+function toLocalInputValue(d){const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`}
+function setVisibilityChoice(v){visibilityValue=v;document.querySelectorAll(".visibility-option").forEach(b=>b.classList.toggle("active",b.dataset.vis===v));$("scheduleField").classList.toggle("show",v==="scheduled")}
+document.querySelectorAll(".visibility-option").forEach(b=>b.onclick=()=>setVisibilityChoice(b.dataset.vis));
+$("visibilityCancel").onclick=()=>{$("visibilityModal").classList.remove('open');visibilityTarget=null};
+$("visibilitySave").onclick=async()=>{
+  if(!visibilityTarget)return;
+  try{
+    let data={visibility:visibilityValue,updatedAt:serverTimestamp()};
+    if(visibilityValue==="public"){data.published=true;data.publishAt=null}
+    else if(visibilityValue==="private"){data.published=false;data.publishAt=null}
+    else{
+      const raw=$("publishAtInput").value;if(!raw){$("visibilityMsg").textContent="Choose an exact date and time.";return}
+      const when=new Date(raw);if(Number.isNaN(when.getTime())||when.getTime()<=Date.now()){ $("visibilityMsg").textContent="Scheduled time must be in the future.";return }
+      data.published=true;data.publishAt=Timestamp.fromDate(when);
+    }
+    await updateDoc(doc(db,visibilityTarget.collectionName,visibilityTarget.id),data);
+    $("visibilityModal").classList.remove('open');const c=visibilityTarget.collectionName;visibilityTarget=null;
+    if(c==="photos")await loadPhotosAdmin();else if(c==="instagram")await loadInstagram();else if(["music","vlogs","blogs","artists"].includes(c))await load(c);await counts();
+  }catch(e){$("visibilityMsg").textContent=e.message}
+};
+document.getElementById("dashboardVisibility").onclick=async()=>{
+  try{const s=await getDoc(doc(db,"settings","dashboard"));const x=s.exists()?s.data():{};visibilityTarget={collectionName:"settings",id:"dashboard"};visibilityValue=x.visibility||"public";$("visibilityTarget").textContent="DASHBOARD CONTENT";const d=visibilityTime(x);$("publishAtInput").value=d?toLocalInputValue(d):"";setVisibilityChoice(visibilityValue);$("visibilityMsg").textContent="";$('visibilityModal').classList.add('open')}catch(e){alert("Could not open dashboard visibility: "+e.message)}};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-vis-collection]");if(b)openVisibility(b.dataset.visCollection,b.dataset.visId)});
+
+
 $("loginBtn").onclick=async()=>{
   try{
     sessionStorage.removeItem(ADMIN_LEFT_KEY);
@@ -477,4 +514,4 @@ onAuthStateChanged(auth,u=>{
   else{$("studio").classList.add("hidden");$("login").classList.remove("hidden")}
 });
 </script>
-</body></html>
+<div class="visibility-modal" id="visibilityModal"><div class="visibility-box"><h2>Visibility</h2><p id="visibilityTarget" class="help"></p><div class="visibility-options"><button type="button" class="visibility-option active" data-vis="public"><strong>PUBLIC</strong><span>Visible on the public website immediately.</span></button><button type="button" class="visibility-option" data-vis="private"><strong>PRIVATE</strong><span>Hidden from the public website.</span></button><button type="button" class="visibility-option" data-vis="scheduled"><strong>SCHEDULE</strong><span>Keep it hidden until the exact date and time.</span></button></div><div class="schedule-field" id="scheduleField"><label>Date &amp; time</label><input id="publishAtInput" type="datetime-local"></div><div class="visibility-actions"><button type="button" class="btn secondary" id="visibilityCancel">Cancel</button><button type="button" class="btn" id="visibilitySave">Save visibility</button></div><p id="visibilityMsg" class="msg"></p></div></div></body></html>
