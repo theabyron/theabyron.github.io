@@ -1,6 +1,8 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>THE ABYRON — Studio</title><link rel="icon" href="../assets/the-abyron-favicon.png"><style>
 :root{--bg:#070706;--panel:#11100f;--line:#302a23;--text:#f4ead9;--muted:#999187;--gold:#d8bd8d;--danger:#c97878}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}button,input,textarea,select{font:inherit}.shell{min-height:100vh}.top{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 5%;gap:16px;position:sticky;top:0;background:#070706ee;backdrop-filter:blur(10px);z-index:5}.logo{width:130px;height:45px;object-fit:contain}.top b{font-size:10px;letter-spacing:.25em;color:var(--gold)}.spacer{margin-left:auto}.top button{border:1px solid var(--line);background:transparent;color:var(--gold);padding:9px 13px;cursor:pointer}.layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 76px)}aside{border-right:1px solid var(--line);padding:28px 16px}.side-kicker{font-size:9px;letter-spacing:.3em;color:#777;margin:0 12px 14px}.side button{width:100%;background:transparent;color:#aaa;border:0;text-align:left;padding:12px;border-radius:4px;cursor:pointer}.side button:hover,.side button.active{background:#171512;color:var(--gold)}main{max-width:1200px;width:100%;padding:38px 5% 70px}.view{display:none}.view.active{display:block}.title{font:clamp(42px,6vw,70px) Georgia,serif;margin:0 0 7px}.sub{color:#888;font-size:13px;margin:0 0 30px}.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric{border:1px solid var(--line);background:var(--panel);padding:20px}.metric strong{font:34px Georgia,serif;display:block}.metric span{font-size:9px;letter-spacing:.15em;color:#777;text-transform:uppercase}.quick{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.quick button,.primary{border:1px solid var(--gold);background:var(--gold);color:#111;padding:14px;cursor:pointer;text-align:left}.quick button.alt{background:var(--panel);color:var(--text);border-color:var(--line)}.panel{border:1px solid var(--line);background:var(--panel);padding:22px;margin-bottom:18px}.panel h2{font:28px Georgia,serif;margin:0 0 18px}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin-bottom:14px}.field label{display:block;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#999;margin-bottom:6px}input,textarea,select{width:100%;background:#090908;border:1px solid #3d362e;color:#fff;padding:12px;border-radius:3px;outline:none}textarea{min-height:110px;resize:vertical}.check{display:flex;align-items:center;gap:8px;color:#bbb;font-size:13px}.check input{width:auto}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.btn{padding:11px 15px;border:1px solid var(--gold);background:var(--gold);color:#111;cursor:pointer;font-weight:700}.btn.secondary{background:transparent;color:var(--gold);border-color:var(--line)}.btn.danger{background:transparent;color:#e6a4a4;border-color:#512c2c}.msg{color:#999;min-height:20px;font-size:12px}.items{display:grid;gap:10px}.item{display:grid;grid-template-columns:78px 1fr auto;gap:15px;align-items:center;border:1px solid var(--line);padding:12px;background:#0d0c0b}.thumb{width:78px;height:58px;object-fit:cover;background:#191713}.item h3{font:22px Georgia,serif;margin:0 0 4px}.item p{margin:0;color:#888;font-size:12px}.tag{font-size:8px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase}.item-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.help{color:#777;font-size:11px;line-height:1.6}.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.login{max-width:430px;margin:10vh auto;padding:30px;border:1px solid var(--line);background:var(--panel)}.login img{width:170px}.hidden{display:none!important}.preview{margin-top:8px;color:#777;font-size:11px}.upload-box{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}.upload-status{margin-top:8px;font-size:11px;color:#999;min-height:18px}.image-preview{display:none;max-width:180px;max-height:180px;object-fit:cover;border:1px solid var(--line);margin-top:10px}.notice{padding:13px;border:1px dashed #4a4035;color:#9f968a;font-size:11px;line-height:1.55}@media(max-width:850px){.layout{grid-template-columns:1fr}aside{position:sticky;top:76px;z-index:4;overflow:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px}.side{display:flex;gap:5px;min-width:max-content}.side-kicker{display:none}.side button{width:auto;white-space:nowrap}.dash-grid{grid-template-columns:1fr 1fr}.quick{grid-template-columns:1fr}.row,.link-grid{grid-template-columns:1fr}.item{grid-template-columns:60px 1fr}.thumb{width:60px;height:55px}.item-actions{grid-column:1/-1;justify-content:flex-start}.upload-box{grid-template-columns:1fr}}@media(max-width:500px){main{padding:25px 4% 50px}.top b{display:none}}
 .target-list{display:grid;gap:8px;padding:10px;border:1px solid var(--line);background:#0d0c0a}.target-list .check{margin:0}.target-list input{accent-color:var(--gold)}
+
+.feature-checks{display:grid;gap:8px;padding:12px;border:1px solid var(--line);background:#0d0c0b}.feature-checks .check{margin:0}.custom-item{display:grid;grid-template-columns:1fr auto;gap:14px;border:1px solid var(--line);padding:14px;background:#0d0c0b}.custom-item h3{font:22px Georgia,serif;margin:0 0 5px}.custom-meta{font-size:10px;color:#888;line-height:1.6}.custom-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}@media(max-width:650px){.custom-item{grid-template-columns:1fr}.custom-actions{justify-content:flex-start}}
 </style></head><body>
 <div id="studioIntro" aria-hidden="true"><div class="studio-intro-ring"></div><img src="../assets/the-abyron-logo.png" alt="THE ABYRON"><div>PRIVATE STUDIO</div></div>
 <div id="login" class="login">
@@ -28,6 +30,8 @@
     <button data-page="blogs">Blogs</button>
     <button data-page="artists">Artists</button>
     <button data-page="photos">Photos</button><button data-page="instagram">Instagram</button>
+    <button data-page="label">The Label</button>
+    <button data-page="custom">New Section</button>
     <button data-page="contact">Contact</button>
     <button data-page="settings">Settings</button>
   </nav>
@@ -154,13 +158,57 @@
   <div class="panel"><h2>Instagram content archive</h2><div id="instagramItems" class="items"></div></div>
 </section>
 
+<section id="page-label" class="view page-label">
+  <div class="page-kicker">PAGE 06 / THE LABEL</div><h1 class="title">The Label</h1><p class="sub">Edit the public label/history page without touching code.</p>
+  <div class="panel"><h2>Label content</h2>
+    <div class="row"><div class="field"><label>Eyebrow</label><input id="labelEyebrow"></div><div class="field"><label>Headline</label><input id="labelHeadline"></div></div>
+    <div class="field"><label>Intro description</label><textarea id="labelDescription"></textarea></div>
+    <div class="row"><div class="field"><label>History heading</label><input id="labelHistoryTitle"></div><div class="field"><label>Feature image URL</label><input id="labelImageUrl" placeholder="https://..."></div></div>
+    <div class="field"><label>History / label story</label><textarea id="labelHistory" style="min-height:190px"></textarea></div>
+    <div class="actions"><button class="btn" id="saveLabel">Save Label</button><button type="button" class="btn secondary" data-vis-collection="settings" data-vis-id="label">Visibility</button></div><p id="labelMsg" class="msg"></p>
+  </div>
+</section>
+
+<section id="page-custom" class="view page-custom">
+  <div class="page-kicker">PAGE 07 / CUSTOM SECTIONS</div><h1 class="title">New Section</h1><p class="sub">Create your own public section and choose which features it uses.</p>
+  <div class="panel"><h2 id="customHeading">Create section</h2>
+    <form id="customForm">
+      <div class="row"><div class="field"><label>Section name</label><input id="customTitle" required placeholder="Studio / About / Services"></div><div class="field"><label>URL slug</label><input id="customSlug" required placeholder="services"></div></div>
+      <div class="row"><div class="field"><label>Subtitle</label><input id="customSubtitle" placeholder="Short section description"></div><div class="field"><label>Feature image URL</label><input id="customImageUrl" placeholder="https://..."></div></div>
+      <div class="field"><label>Section content (HTML supported)</label><textarea id="customContent" style="min-height:220px" placeholder="Write the section content here..."></textarea></div>
+      <div class="row"><div class="field"><label>CTA text</label><input id="customCtaText" placeholder="Explore / Contact / Listen"></div><div class="field"><label>CTA URL</label><input id="customCtaUrl" placeholder="https://... or #music"></div></div>
+      <div class="field"><label>Section features</label><div class="feature-checks">
+        <label class="check"><input id="customShowMenu" type="checkbox" checked> Show in public menu</label>
+        <label class="check"><input id="customShowIntro" type="checkbox" checked> Show title + subtitle</label>
+        <label class="check"><input id="customShowImage" type="checkbox"> Show feature image</label>
+        <label class="check"><input id="customShowCta" type="checkbox"> Show CTA button</label>
+        <label class="check"><input id="customWide" type="checkbox"> Wide editorial layout</label>
+      </div></div>
+      <div class="actions"><button class="btn">Save Section</button><button type="button" class="btn secondary hidden" id="customCancel">Cancel edit</button></div><p id="customMsg" class="msg"></p>
+    </form>
+  </div>
+  <div class="panel"><h2>Your custom sections</h2><div id="customItems" class="items"></div></div>
+</section>
+
 <section id="page-contact" class="view page-contact">
-  <div class="page-kicker">PAGE 06 / CONTACT</div><h1 class="title">Contact</h1><p class="sub">Public-facing label contact.</p>
-  <div class="panel contact-panel"><h2>THE ABYRON</h2><p>For music, stories and collaborations.</p><a class="btn" href="mailto:theabyron.music@gmail.com">theabyron.music@gmail.com</a></div>
+  <div class="page-kicker">PAGE 08 / CONTACT</div><h1 class="title">Contact</h1><p class="sub">Edit the public contact page.</p>
+  <div class="panel"><h2>Contact content</h2>
+    <div class="row"><div class="field"><label>Eyebrow</label><input id="contactEyebrow"></div><div class="field"><label>Email</label><input id="contactEmail" type="email"></div></div>
+    <div class="field"><label>Headline</label><input id="contactHeadline"></div>
+    <div class="field"><label>Description</label><textarea id="contactDescription"></textarea></div>
+    <div class="field"><label>Instagram URL</label><input id="contactInstagram" placeholder="https://instagram.com/..."></div>
+    <div class="actions"><button class="btn" id="saveContact">Save Contact</button><button type="button" class="btn secondary" data-vis-collection="settings" data-vis-id="contact">Visibility</button></div><p id="contactMsg" class="msg"></p>
+  </div>
 </section>
 
 <section id="page-settings" class="view page-settings">
-  <div class="page-kicker">PAGE 07 / SYSTEM</div><h1 class="title">Settings</h1><p class="sub">Upload system status and studio notes.</p>
+  <div class="page-kicker">PAGE 09 / SYSTEM</div><h1 class="title">Settings</h1><p class="sub">Edit the public site's small system-wide details.</p>
+  <div class="panel"><h2>Public site settings</h2>
+    <div class="row"><div class="field"><label>Browser / site title</label><input id="siteTitle"></div><div class="field"><label>Menu footer line</label><input id="siteMenuLine"></div></div>
+    <div class="row"><div class="field"><label>Footer line 1</label><input id="siteFooter1"></div><div class="field"><label>Footer line 2</label><input id="siteFooter2"></div></div>
+    <div class="field"><label>Public meta description</label><textarea id="siteDescription"></textarea></div>
+    <div class="actions"><button class="btn" id="saveSettings">Save Settings</button><button type="button" class="btn secondary" data-vis-collection="settings" data-vis-id="site">Visibility</button></div><p id="settingsMsg" class="msg"></p>
+  </div>
   <div class="panel"><h2>Image delivery</h2><div class="notice">Images use the existing secure Cloudflare Worker → GitHub Pages pipeline. No Firebase Storage is required.</div></div>
 </section>
 
@@ -174,7 +222,7 @@
 .record-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.record-card{border:1px solid var(--line);padding:16px;background:#0d0c0b}.record-card b{font:23px Georgia,serif;display:block;margin-bottom:5px}.record-card small{color:#777}
 .toolbar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}.toolbar button{background:#0b0a09;border:1px solid var(--line);color:var(--gold);padding:7px 10px;cursor:pointer}.rich-editor{min-height:210px;border:1px solid #3d362e;background:#090908;padding:18px;line-height:1.7;outline:none}.rich-editor:focus{border-color:var(--gold)}.rich-editor h2,.rich-editor h3{font-family:Georgia,serif}.visibility-modal{position:fixed;inset:0;background:#000b;z-index:200;display:none;align-items:center;justify-content:center;padding:20px}.visibility-modal.open{display:flex}.visibility-box{width:min(520px,94vw);background:#11100e;border:1px solid #4b4135;padding:26px;box-shadow:0 20px 80px #000}.visibility-box h2{font:32px Georgia,serif;margin:0 0 18px}.visibility-options{display:grid;gap:10px}.visibility-option{border:1px solid #3a332b;background:#0b0a09;padding:14px;cursor:pointer}.visibility-option.active{border-color:var(--gold);background:#17130f}.visibility-option strong{display:block;color:var(--gold);margin-bottom:4px}.visibility-option span{font-size:12px;color:#888}.schedule-field{margin-top:14px;display:none}.schedule-field.show{display:block}.schedule-field input{width:100%;padding:12px;background:#090908;border:1px solid #40382f;color:var(--text)}.visibility-actions{display:flex;gap:8px;margin-top:18px;justify-content:flex-end}.status-public{color:#d8bd8d}.status-private{color:#999}.status-scheduled{color:#d7a6a6}.photo-admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.photo-admin{border:1px solid var(--line);background:#0d0c0b;overflow:hidden}.photo-admin img{width:100%;aspect-ratio:1;object-fit:cover;display:block}.photo-admin .photo-url{padding:8px;font-size:9px;color:#777;word-break:break-all}.photo-meta{padding:10px 10px 0;display:flex;justify-content:space-between;gap:8px;align-items:center}.photo-meta b{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.photo-actions{display:flex;gap:7px;padding:10px}.photo-actions .btn{padding:8px 11px}
 .view{display:none!important;opacity:0;transform:translateY(25px) scale(.985)}.view.active{display:block!important;animation:pageIn .55s cubic-bezier(.2,.8,.2,1) both}
-.view.page-music.active{animation:musicIn .58s cubic-bezier(.16,1,.3,1) both}.view.page-vlogs.active{animation:vlogIn .62s cubic-bezier(.16,1,.3,1) both}.view.page-blogs.active{animation:blogIn .56s cubic-bezier(.16,1,.3,1) both}.view.page-artists.active{animation:artistIn .62s cubic-bezier(.16,1,.3,1) both}.view.page-photos.active{animation:photoIn .7s cubic-bezier(.16,1,.3,1) both}.view.page-contact.active{animation:contactIn .65s cubic-bezier(.16,1,.3,1) both}.view.page-settings.active{animation:settingsIn .55s cubic-bezier(.16,1,.3,1) both}
+.view.page-music.active{animation:musicIn .58s cubic-bezier(.16,1,.3,1) both}.view.page-vlogs.active{animation:vlogIn .62s cubic-bezier(.16,1,.3,1) both}.view.page-blogs.active{animation:blogIn .56s cubic-bezier(.16,1,.3,1) both}.view.page-artists.active{animation:artistIn .62s cubic-bezier(.16,1,.3,1) both}.view.page-photos.active{animation:photoIn .7s cubic-bezier(.16,1,.3,1) both}.view.page-contact.active{animation:contactIn .65s cubic-bezier(.16,1,.3,1) both}.view.page-settings.active{animation:settingsIn .55s cubic-bezier(.16,1,.3,1) both}.view.page-label.active{animation:contactIn .55s cubic-bezier(.16,1,.3,1) both}.view.page-custom.active{animation:settingsIn .55s cubic-bezier(.16,1,.3,1) both}
 @keyframes pageIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}@keyframes musicIn{from{opacity:0;transform:translateX(-55px) skewX(-2deg)}to{opacity:1;transform:none}}@keyframes vlogIn{from{opacity:0;transform:scale(.92) rotate(-1deg)}to{opacity:1;transform:none}}@keyframes blogIn{from{opacity:0;transform:translateY(65px)}to{opacity:1;transform:none}}@keyframes artistIn{from{opacity:0;transform:translateX(55px)}to{opacity:1;transform:none}}@keyframes photoIn{from{opacity:0;transform:scale(.84) rotate(1.5deg)}to{opacity:1;transform:none}}@keyframes contactIn{from{opacity:0;transform:translateY(-45px)}to{opacity:1;transform:none}}@keyframes settingsIn{from{opacity:0;filter:blur(7px);transform:scale(.97)}to{opacity:1;filter:none;transform:none}}
 @media(max-width:700px){.record-grid{grid-template-columns:1fr}.photo-admin-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
@@ -334,6 +382,8 @@ function showPage(name){
   if(["music","vlogs","blogs","artists"].includes(name))load(name);
   if(name==="photos")loadPhotos();
   if(name==="instagram"){loadInstagram();loadInstagramArtists([]);}
+  if(name==="label"||name==="contact"||name==="settings")loadEditableSettings();
+  if(name==="custom")loadCustomSections();
 }
 document.querySelectorAll(".side button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
 
@@ -355,7 +405,7 @@ async function loadDashboard(){
 }
 document.querySelectorAll("#dashToolbar [data-cmd]").forEach(b=>b.onclick=()=>{document.execCommand(b.dataset.cmd,false,b.dataset.value||null);$("dashboardEditor").focus()});
 $("dashLink").onclick=()=>{const u=prompt("Link URL");if(u)document.execCommand("createLink",false,u)};
-$("saveDashboard").onclick=async()=>{try{await setDoc(doc(db,"settings","dashboard"),{html:$("dashboardEditor").innerHTML,updatedAt:serverTimestamp()},{merge:true});$("dashboardMsg").textContent="✓ Dashboard saved.";setTimeout(()=>$("dashboardMsg").textContent="",1800)}catch(e){$("dashboardMsg").textContent=e.message}};
+$("saveDashboard").onclick=async()=>{try{const ref=doc(db,"settings","dashboard");const old=await getDoc(ref);const prev=old.exists()?old.data():{};await setDoc(ref,{html:$("dashboardEditor").innerHTML,updatedAt:serverTimestamp(),published:prev.published!==undefined?prev.published:true,visibility:prev.visibility||"public"},{merge:true});$("dashboardMsg").textContent="✓ Dashboard saved and synced.";setTimeout(()=>$("dashboardMsg").textContent="",1800);loadDashboard()}catch(e){$("dashboardMsg").textContent=e.message}};
 
 async function loadPhotos(){
   const box=$("photoItems");box.innerHTML='<div class="help">Loading photos…</div>';
@@ -450,6 +500,34 @@ $("instagramForm").onsubmit=async e=>{e.preventDefault();try{
  }catch(e){$("igMsg").textContent=e.message}};
 
 
+
+// EDITABLE LABEL / CONTACT / SITE SETTINGS
+const DEFAULT_LABEL={eyebrow:"The Label",headline:"Music first.\nAlways.",description:"THE ABYRON is an independent creative home for original artists, honest stories and a distinctive visual language. Music leads. Everything else supports the story.",historyTitle:"Our History",history:"THE ABYRON is built as an independent record label and creative platform. The journey is centered on original music, artists, visual culture and stories — growing release by release while keeping the creative identity independent.\n\nThis is the label record: what we create, who creates it, the stories around it, and the visual world that connects everything together.",imageUrl:"assets/prem.jpg"};
+const DEFAULT_CONTACT={eyebrow:"Contact",headline:"Have a story, song or collaboration in mind?",description:"For music, stories and collaborations.",email:"theabyron.music@gmail.com",instagram:"https://www.instagram.com/the_abyron/"};
+const DEFAULT_SITE={siteTitle:"THE ABYRON — Independent Music Label",description:"THE ABYRON — independent music label, music, stories, artists and visual culture.",menuLine:"Independent music label\\nMusic first. Always.",footer1:"© 2026 THE ABYRON",footer2:"Independent Music Label · All Rights Reserved"};
+function put(id,v){if($(id))$(id).value=v??""}
+async function loadEditableSettings(){
+ try{const [l,c,s]=await Promise.all([getDoc(doc(db,"settings","label")),getDoc(doc(db,"settings","contact")),getDoc(doc(db,"settings","site"))]);const L={...DEFAULT_LABEL,...(l.exists()?l.data():{})},C={...DEFAULT_CONTACT,...(c.exists()?c.data():{})},S={...DEFAULT_SITE,...(s.exists()?s.data():{})};
+  put("labelEyebrow",L.eyebrow);put("labelHeadline",L.headline);put("labelDescription",L.description);put("labelHistoryTitle",L.historyTitle);put("labelHistory",L.history);put("labelImageUrl",L.imageUrl);
+  put("contactEyebrow",C.eyebrow);put("contactHeadline",C.headline);put("contactDescription",C.description);put("contactEmail",C.email);put("contactInstagram",C.instagram);
+  put("siteTitle",S.siteTitle);put("siteDescription",S.description);put("siteMenuLine",S.menuLine);put("siteFooter1",S.footer1);put("siteFooter2",S.footer2);
+ }catch(e){console.error("Editable settings load failed",e)}
+}
+$("saveLabel").onclick=async()=>{try{await setDoc(doc(db,"settings","label"),{eyebrow:$('labelEyebrow').value.trim(),headline:$('labelHeadline').value.trim(),description:$('labelDescription').value.trim(),historyTitle:$('labelHistoryTitle').value.trim(),history:$('labelHistory').value.trim(),imageUrl:$('labelImageUrl').value.trim(),published:true,visibility:"public",updatedAt:serverTimestamp()},{merge:true});$('labelMsg').textContent="✓ Label saved."}catch(e){$('labelMsg').textContent=e.message}};
+$("saveContact").onclick=async()=>{try{await setDoc(doc(db,"settings","contact"),{eyebrow:$('contactEyebrow').value.trim(),headline:$('contactHeadline').value.trim(),description:$('contactDescription').value.trim(),email:$('contactEmail').value.trim(),instagram:$('contactInstagram').value.trim(),published:true,visibility:"public",updatedAt:serverTimestamp()},{merge:true});$('contactMsg').textContent="✓ Contact saved."}catch(e){$('contactMsg').textContent=e.message}};
+$("saveSettings").onclick=async()=>{try{await setDoc(doc(db,"settings","site"),{siteTitle:$('siteTitle').value.trim(),description:$('siteDescription').value.trim(),menuLine:$('siteMenuLine').value.trim(),footer1:$('siteFooter1').value.trim(),footer2:$('siteFooter2').value.trim(),published:true,visibility:"public",updatedAt:serverTimestamp()},{merge:true});$('settingsMsg').textContent="✓ Settings saved."}catch(e){$('settingsMsg').textContent=e.message}};
+
+// CUSTOM PUBLIC SECTIONS
+let customEditId=null;
+function slugify(v){return String(v||"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,50)}
+$("customTitle").addEventListener("input",()=>{if(!customEditId && !$('customSlug').value.trim())$('customSlug').value=slugify($('customTitle').value)});
+function resetCustom(){customEditId=null;$('customForm').reset();$('customShowMenu').checked=true;$('customShowIntro').checked=true;$('customHeading').textContent="Create section";$('customCancel').classList.add('hidden');$('customMsg').textContent=""}
+$('customCancel').onclick=resetCustom;
+async function loadCustomSections(){const box=$('customItems');if(!box)return;box.innerHTML='<div class="help">Loading…</div>';try{const s=await getDocs(collection(db,"customSections"));const docs=[...s.docs].sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));box.innerHTML=docs.length?docs.map(d=>{const x=d.data();return `<div class="custom-item"><div><div class="tag">${x.published===false?'Hidden':'Published'} · ${x.showMenu===false?'Menu hidden':'Menu visible'}</div><h3>${esc(x.title||'Untitled section')}</h3><div class="custom-meta">#custom/${esc(x.slug||d.id)} · ${esc(x.subtitle||'No subtitle')}</div></div><div class="custom-actions"><button type="button" class="btn secondary" data-vis-collection="customSections" data-vis-id="${d.id}">Visibility</button><button type="button" class="btn secondary" data-custom-edit="${d.id}">Edit</button><button type="button" class="btn danger" data-custom-delete="${d.id}">Delete</button></div></div>`}).join(''):'<div class="help">No custom sections yet.</div>';box.querySelectorAll('[data-custom-edit]').forEach(b=>b.onclick=()=>editCustomSection(b.dataset.customEdit));box.querySelectorAll('[data-custom-delete]').forEach(b=>b.onclick=()=>deleteCustomSection(b.dataset.customDelete));}catch(e){box.innerHTML='<div class="help">Could not load custom sections.</div>'}}
+async function editCustomSection(id){const s=await getDoc(doc(db,"customSections",id));if(!s.exists())return;const x=s.data();customEditId=id;put('customTitle',x.title);put('customSlug',x.slug);put('customSubtitle',x.subtitle);put('customImageUrl',x.imageUrl);put('customContent',x.content);put('customCtaText',x.ctaText);put('customCtaUrl',x.ctaUrl);$('customShowMenu').checked=x.showMenu!==false;$('customShowIntro').checked=x.showIntro!==false;$('customShowImage').checked=x.showImage===true;$('customShowCta').checked=x.showCta===true;$('customWide').checked=x.wide===true;$('customHeading').textContent="Edit section";$('customCancel').classList.remove('hidden');$('customMsg').textContent="Editing existing section.";showPage('custom');}
+async function deleteCustomSection(id){if(!confirm('Delete this custom section?'))return;try{await deleteDoc(doc(db,"customSections",id));if(customEditId===id)resetCustom();await loadCustomSections()}catch(e){alert('Could not delete custom section: '+e.message)}}
+$('customForm').onsubmit=async e=>{e.preventDefault();try{const slug=slugify($('customSlug').value);if(!slug){$('customMsg').textContent='Enter a valid URL slug.';return}const data={title:$('customTitle').value.trim(),slug,subtitle:$('customSubtitle').value.trim(),imageUrl:$('customImageUrl').value.trim(),content:$('customContent').value,ctaText:$('customCtaText').value.trim(),ctaUrl:$('customCtaUrl').value.trim(),showMenu:$('customShowMenu').checked,showIntro:$('customShowIntro').checked,showImage:$('customShowImage').checked,showCta:$('customShowCta').checked,wide:$('customWide').checked,published:true,visibility:'public',updatedAt:serverTimestamp()};if(customEditId)await updateDoc(doc(db,'customSections',customEditId),data);else{data.createdAt=serverTimestamp();await addDoc(collection(db,'customSections'),data)}$('customMsg').textContent='✓ Section saved.';resetCustom();await loadCustomSections()}catch(e){$('customMsg').textContent=e.message}};
+
 // UNIVERSAL VISIBILITY CONTROL: Public / Private / Exact scheduled publish time.
 let visibilityTarget=null, visibilityValue="public";
 function visibilityLabel(x){const v=x?.visibility||((x?.published===false)?"private":"public");if(v==="scheduled")return "Scheduled";return v==="private"?"Private":"Public"}
@@ -479,7 +557,7 @@ $("visibilitySave").onclick=async()=>{
     }
     await updateDoc(doc(db,visibilityTarget.collectionName,visibilityTarget.id),data);
     $("visibilityModal").classList.remove('open');const c=visibilityTarget.collectionName;visibilityTarget=null;
-    if(c==="photos")await loadPhotosAdmin();else if(c==="instagram")await loadInstagram();else if(["music","vlogs","blogs","artists"].includes(c))await load(c);await counts();
+    if(c==="photos")await loadPhotos();else if(c==="instagram")await loadInstagram();else if(["music","vlogs","blogs","artists"].includes(c))await load(c);else if(c==="customSections")await loadCustomSections();else if(c==="settings")await loadEditableSettings();await counts();
   }catch(e){$("visibilityMsg").textContent=e.message}
 };
 document.getElementById("dashboardVisibility").onclick=async()=>{
@@ -510,7 +588,7 @@ onAuthStateChanged(auth,u=>{
     else signOut(auth).catch(()=>{});
     return;
   }
-  if(u){$("login").classList.add("hidden");$("studio").classList.remove("hidden");playStudioIntro();counts();loadDashboard();load("music");}
+  if(u){$("login").classList.add("hidden");$("studio").classList.remove("hidden");playStudioIntro();counts();loadDashboard();load("music");loadEditableSettings();loadCustomSections();}
   else{$("studio").classList.add("hidden");$("login").classList.remove("hidden")}
 });
 </script>
