@@ -1,33 +1,28 @@
-# THE ABYRON — Private Studio Website
+THE ABYRON Studio V4
 
-This build includes a redesigned public label site and private Firebase Studio.
+Structure:
+admin/index.html
+index.html
+worker.js
 
-## Public site
-- Right-top animated hamburger menu
-- Short THE ABYRON intro animation on page load
-- Dashboard-style homepage with live Firestore counters
-- Music, Vlogs, Blogs, Artists, The Label and Contact sections
-- Music/platform URLs are detected automatically on the public cards
-- Mobile-first responsive layout
+Key changes:
+- Admin is rebuilt as a working authenticated module; no lifecycle/pagehide auto-logout that can break mobile file pickers.
+- Upload buttons are explicitly bound to the upload handler.
+- Vlogs remain multi-image.
+- Artists remain single-image and editing updates the same Firestore document.
+- New Photos page: multi-select, one URL per image, one GitHub folder per image, Firestore collection: photos.
+- Dashboard is a record-label control room and has a rich HTML editor. Its saved HTML is stored at settings/dashboard.
+- Every non-dashboard admin section has its own animated page transition.
+- Public site keeps the original visual design and adds a separate Photos section.
+- worker.js includes CORS OPTIONS handling and authenticated GitHub upload.
 
-## Private Studio
-Open `/admin/` and sign in with the authorised Firebase Authentication account.
+IMPORTANT:
+Deploy worker.js to the same existing Cloudflare Worker and keep the existing environment variables/secrets:
+FIREBASE_WEB_API_KEY
+GITHUB_BRANCH
+GITHUB_OWNER
+GITHUB_REPO
+GITHUB_TOKEN
+ADMIN_UID
 
-Separate publishing forms are provided for:
-- Music: release type, cover URL, description, multiple platform links
-- Vlogs: video URL, thumbnail URL, description
-- Blogs: category, feature image, article text, optional link
-- Artists: role, profile image, bio, multiple social/platform links
-- Dashboard: content counts and quick actions
-- Settings and Contact information
-
-## Free Firebase plan note
-This project remains compatible with Firebase Spark. Firebase Storage is intentionally not used. Direct image/video/file uploads require a storage service; for this build, media is added through public URLs so the project does not require Blaze billing.
-
-## GitHub Pages
-Upload the contents of this ZIP while preserving:
-- `index.html`
-- `firebase-config.js`
-- `admin/index.html`
-- `assets/*`
-- the remaining root config/rules files
+Existing Firestore documents are not deleted or migrated by these files.
