@@ -4,121 +4,79 @@
 <div id="login" class="login"><img src="../assets/the-abyron-logo.png" alt="THE ABYRON"><h1>Private Studio</h1><p class="sub">Your control room for everything published on THE ABYRON.</p><div class="field"><label>Email</label><input id="email" type="email" autocomplete="username"></div><div class="field"><label>Password</label><input id="password" type="password" autocomplete="current-password"></div><button class="btn" id="loginBtn">Enter Studio</button><p id="loginMsg" class="msg"></p></div>
 <div id="studio" class="shell hidden"><header class="top"><img class="logo" src="../assets/the-abyron-logo.png"><b>PRIVATE STUDIO</b><span class="spacer"></span><button id="logout">Logout</button></header><div class="layout"><aside><div class="side-kicker">CONTROL ROOM</div><nav class="side"><button class="active" data-view="dashboard">Dashboard</button><button data-view="music">Music</button><button data-view="vlogs">Vlogs</button><button data-view="blogs">Blogs</button><button data-view="artists">Artists</button><button data-view="contact">Contact</button><button data-view="settings">Settings</button></nav></aside><main>
 <section id="dashboard" class="view active"><h1 class="title">Dashboard</h1><p class="sub">A single place to see what THE ABYRON is publishing, what is live, and what needs attention.</p><div class="dash-grid"><div class="metric"><strong id="mMusic">—</strong><span>Music</span></div><div class="metric"><strong id="mVlogs">—</strong><span>Vlogs</span></div><div class="metric"><strong id="mBlogs">—</strong><span>Blog posts</span></div><div class="metric"><strong id="mArtists">—</strong><span>Artists</span></div></div><div class="quick"><button data-go="music">＋ Add new release</button><button data-go="blogs" class="alt">＋ Publish a story</button><button data-go="artists" class="alt">＋ Add an artist</button></div></section>
-<section id="music" class="view"><h1 class="title">Music</h1><p class="sub">Each release gets its own platform map.</p><div class="panel"><h2 id="musicHeading">Add release</h2><form id="musicForm"><div class="row"><div class="field"><label>Release title</label><input id="musicTitle" required></div><div class="field"><label>Type</label><select id="musicType"><option>Single</option><option>EP</option><option>Album</option><option>Soundtrack</option><option>Announcement</option></select></div></div><div class="field"><label>Cover image</label><div class="upload-box"><input id="musicImageFile" type="file" accept="image/jpeg,image/png,image/webp"><button type="button" class="btn secondary" data-upload="music">Upload Image</button></div><input id="musicImage" class="hidden"><img id="musicImagePreview" class="image-preview"><div id="musicUploadStatus" class="upload-status"></div></div><div class="field"><label>Description</label><textarea id="musicDesc"></textarea></div><div class="field"><label>Platform links</label><div id="musicLinks" class="url-list"></div><button type="button" class="btn secondary" id="addMusicLink">＋ Add platform link</button></div><label class="check"><input id="musicPub" type="checkbox" checked> Publish immediately</label><div class="actions"><button class="btn">Save release</button><button type="button" class="btn secondary hidden" id="musicCancel">Cancel edit</button></div><p id="musicMsg" class="msg"></p></form></div><div class="panel"><h2>Your releases</h2><div id="musicItems" class="items"></div></div></section>
+<section id="music" class="view"><h1 class="title">Music</h1><p class="sub">Each release gets its own platform map.</p><div class="panel"><h2 id="musicHeading">Add release</h2><form id="musicForm"><div class="row"><div class="field"><label>Release title</label><input id="musicTitle" required></div><div class="field"><label>Type</label><select id="musicType"><option>Single</option><option>EP</option><option>Album</option><option>Soundtrack</option><option>Announcement</option></select></div></div><div class="field"><label>Cover image</label><div class="upload-box"><input id="musicImageFile" type="file" accept="image/jpeg,image/png,image/webp" multiple><button type="button" class="btn secondary" data-upload="music">Upload Image</button></div><input id="musicImage" class="hidden"><img id="musicImagePreview" class="image-preview"><div id="musicUploadStatus" class="upload-status"></div></div><div class="field"><label>Description</label><textarea id="musicDesc"></textarea></div><div class="field"><label>Platform links</label><div id="musicLinks" class="url-list"></div><button type="button" class="btn secondary" id="addMusicLink">＋ Add platform link</button></div><label class="check"><input id="musicPub" type="checkbox" checked> Publish immediately</label><div class="actions"><button class="btn">Save release</button><button type="button" class="btn secondary hidden" id="musicCancel">Cancel edit</button></div><p id="musicMsg" class="msg"></p></form></div><div class="panel"><h2>Your releases</h2><div id="musicItems" class="items"></div></div></section>
 <section id="vlogs" class="view"><h1 class="title">Vlogs</h1><p class="sub">Behind-the-scenes videos, studio moments, announcements and visual diaries.</p><div class="panel"><h2 id="vlogHeading">Add vlog</h2><form id="vlogForm"><div class="row"><div class="field"><label>Title</label><input id="vlogTitle" required></div><div class="field"><label>Video URL</label><input id="vlogLink" placeholder="YouTube / Vimeo / video URL"></div></div><div class="field"><label>Thumbnail image</label><div class="upload-box"><input id="vlogImageFile" type="file" accept="image/jpeg,image/png,image/webp" multiple><button type="button" class="btn secondary" data-upload="vlogs">Upload Image</button></div><input id="vlogImage" class="hidden"><img id="vlogImagePreview" class="image-preview"><div id="vlogUploadStatus" class="upload-status"></div></div><div class="field"><label>Description</label><textarea id="vlogDesc"></textarea></div><label class="check"><input id="vlogPub" type="checkbox" checked> Publish immediately</label><div class="actions"><button class="btn">Save vlog</button><button type="button" class="btn secondary hidden" id="vlogCancel">Cancel edit</button></div><p id="vlogMsg" class="msg"></p></form></div><div class="panel"><h2>Your vlogs</h2><div id="vlogItems" class="items"></div></div></section>
-<section id="blogs" class="view"><h1 class="title">Blogs</h1><p class="sub">Share label news, achievements, team updates, milestones and long-form stories.</p><div class="panel"><h2 id="blogHeading">Write a blog</h2><form id="blogForm"><div class="row"><div class="field"><label>Headline</label><input id="blogTitle" required></div><div class="field"><label>Category</label><select id="blogType"><option>News</option><option>Achievement</option><option>Team</option><option>Story</option><option>Announcement</option></select></div></div><div class="field"><label>Feature image</label><div class="upload-box"><input id="blogImageFile" type="file" accept="image/jpeg,image/png,image/webp"><button type="button" class="btn secondary" data-upload="blogs">Upload Image</button></div><input id="blogImage" class="hidden"><img id="blogImagePreview" class="image-preview"><div id="blogUploadStatus" class="upload-status"></div></div><div class="field"><label>Article text</label><textarea id="blogDesc" style="min-height:190px"></textarea></div><div class="field"><label>Optional video / article link</label><input id="blogLink" placeholder="https://..."></div><label class="check"><input id="blogPub" type="checkbox" checked> Publish immediately</label><div class="actions"><button class="btn">Publish story</button><button type="button" class="btn secondary hidden" id="blogCancel">Cancel edit</button></div><p id="blogMsg" class="msg"></p></form></div><div class="panel"><h2>Your stories</h2><div id="blogItems" class="items"></div></div></section>
+<section id="blogs" class="view"><h1 class="title">Blogs</h1><p class="sub">Share label news, achievements, team updates, milestones and long-form stories.</p><div class="panel"><h2 id="blogHeading">Write a blog</h2><form id="blogForm"><div class="row"><div class="field"><label>Headline</label><input id="blogTitle" required></div><div class="field"><label>Category</label><select id="blogType"><option>News</option><option>Achievement</option><option>Team</option><option>Story</option><option>Announcement</option></select></div></div><div class="field"><label>Feature image</label><div class="upload-box"><input id="blogImageFile" type="file" accept="image/jpeg,image/png,image/webp" multiple><button type="button" class="btn secondary" data-upload="blogs">Upload Image</button></div><input id="blogImage" class="hidden"><img id="blogImagePreview" class="image-preview"><div id="blogUploadStatus" class="upload-status"></div></div><div class="field"><label>Article text</label><textarea id="blogDesc" style="min-height:190px"></textarea></div><div class="field"><label>Optional video / article link</label><input id="blogLink" placeholder="https://..."></div><label class="check"><input id="blogPub" type="checkbox" checked> Publish immediately</label><div class="actions"><button class="btn">Publish story</button><button type="button" class="btn secondary hidden" id="blogCancel">Cancel edit</button></div><p id="blogMsg" class="msg"></p></form></div><div class="panel"><h2>Your stories</h2><div id="blogItems" class="items"></div></div></section>
 <section id="artists" class="view"><h1 class="title">Artists</h1><p class="sub">Build artist profiles with identity, biography and links.</p><div class="panel"><h2 id="artistHeading">Add artist</h2><form id="artistForm"><div class="row"><div class="field"><label>Artist name</label><input id="artistTitle" required></div><div class="field"><label>Role</label><input id="artistRole" placeholder="Artist · Songwriter · Producer"></div></div><div class="field"><label>Profile image</label><div class="upload-box"><input id="artistImageFile" type="file" accept="image/jpeg,image/png,image/webp"><button type="button" class="btn secondary" data-upload="artists">Upload Image</button></div><input id="artistImage" class="hidden"><img id="artistImagePreview" class="image-preview"><div id="artistUploadStatus" class="upload-status"></div></div><div class="field"><label>Bio</label><textarea id="artistBio"></textarea></div><div class="field"><label>Social / platform links</label><div id="artistLinks" class="url-list"></div><button type="button" class="btn secondary" id="addArtistLink">＋ Add link</button></div><label class="check"><input id="artistPub" type="checkbox" checked> Publish immediately</label><div class="actions"><button class="btn">Save artist</button><button type="button" class="btn secondary hidden" id="artistCancel">Cancel edit</button></div><p id="artistMsg" class="msg"></p></form></div><div class="panel"><h2>Your artists</h2><div id="artistItems" class="items"></div></div></section>
 <section id="contact" class="view"><h1 class="title">Contact</h1><p class="sub">Public-facing contact details.</p><div class="panel"><h2>Contact settings</h2><div class="field"><label>Email</label><input value="theabyron.music@gmail.com" disabled></div></div></section>
 <section id="settings" class="view"><h1 class="title">Settings</h1><p class="sub">Simple controls for the studio.</p><div class="panel"><h2>Image upload</h2><div class="notice">Images uploaded from this panel are sent to the secure upload endpoint, committed into the GitHub Pages repository under <b>uploads/</b>, and then stored in Firestore as an image URL. Visitors see the image directly on the THE ABYRON site.</div></div></section>
 </main></div></div>
 <script type="module">
-import{initializeApp}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";import{getFirestore,collection,addDoc,getDocs,query,orderBy,serverTimestamp,deleteDoc,doc,updateDoc,getDoc}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";import{FIREBASE_CONFIG}from"../firebase-config.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";import{getFirestore,collection,addDoc,getDocs,query,orderBy,serverTimestamp,deleteDoc,doc,updateDoc,getDoc,deleteField}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";import{FIREBASE_CONFIG}from"../firebase-config.js";
 const app=initializeApp(FIREBASE_CONFIG),auth=getAuth(app),db=getFirestore(app);
 
-// Upload-safe admin session behavior.
-// No automatic logout on page visibility changes because Android/iOS file
-// pickers can temporarily hide this page while the user selects an image.
+// ADMIN SESSION SECURITY
 const ADMIN_LEFT_KEY="theabyron_admin_left";
+let filePickerOpen=false;
+
+// Android/iOS file pickers can temporarily hide the page. Never logout while
+// the user is choosing an image.
+document.querySelectorAll('input[type="file"]').forEach(input=>{
+  input.addEventListener("click",()=>{filePickerOpen=true;});
+  input.addEventListener("change",()=>{filePickerOpen=false;});
+});
+
+function markAdminLeft(){
+  if(filePickerOpen) return;
+  try{sessionStorage.setItem(ADMIN_LEFT_KEY,"1");}catch(e){}
+  signOut(auth).catch(()=>{});
+}
+window.addEventListener("focus",()=>setTimeout(()=>{filePickerOpen=false},500));
+window.addEventListener("pagehide",()=>markAdminLeft());
+
 const $=id=>document.getElementById(id);const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));let edit={music:null,vlogs:null,blogs:null,artists:null};
 // Set this after deploying worker.js. Examconst UPLOAD_ENDPOINT=\"https://the-abyron-upload.ankusharya82654.workers.dev\";ple: https://the-abyron-image-upload.<your-subdomain>.workers.dev
 const UPLOAD_ENDPOINT="https://the-abyron-upload.ankusharya82654.workers.dev";
-async function uploadImage(file,type){
-  if(!file) throw new Error("Choose an image first.");
-  if(file.size>8*1024*1024) throw new Error("Image must be 8 MB or smaller.");
-  if(!/^image\/(jpeg|png|webp)$/.test(file.type)) throw new Error("Only JPG, PNG and WEBP images are allowed.");
-  const user=auth.currentUser;
-  if(!user) throw new Error("Admin session expired. Login again.");
-  const token=await user.getIdToken(true);
-  const fd=new FormData();
-  fd.append("file",file,file.name);
-  fd.append("type",type);
-  let r;
-  try{
-    r=await fetch(UPLOAD_ENDPOINT,{method:"POST",headers:{Authorization:"Bearer "+token},body:fd});
-  }catch(e){
-    throw new Error("Upload server se connection nahi ho raha. Worker/CORS check karo.");
-  }
-  const data=await r.json().catch(()=>({}));
-  if(!r.ok || !data.url) throw new Error(data.error||("Upload failed (HTTP "+r.status+")."));
-  return data.url;
-}
+async function uploadImage(file,type){if(!file)throw new Error("Choose an image first.");if(file.size>8*1024*1024)throw new Error("Image must be 8 MB or smaller.");if(!/^image\/(jpeg|png|webp)$/.test(file.type))throw new Error("Only JPG, PNG and WEBP images are allowed.");const u=await auth.currentUser?.getIdToken();if(!u)throw new Error("Admin session expired. Login again.");if(UPLOAD_ENDPOINT.includes("YOUR_"))throw new Error("Upload endpoint is not configured yet.");const fd=new FormData();fd.append("file",file);fd.append("type",type);let r;try{r=await fetch(UPLOAD_ENDPOINT,{method:"POST",headers:{Authorization:"Bearer "+u},body:fd});}catch(e){throw new Error("Upload server se connection nahi ho raha. Worker URL/CORS check karo.")}const data=await r.json().catch(()=>({}));if(!r.ok||!data.url)throw new Error(data.error||(`Upload failed (HTTP ${r.status}).`));return data.url}
 
-async function uploadImages(files,type){
-  const selected=Array.from(files||[]);
-  if(!selected.length) throw new Error("Choose at least one image.");
-  const urls=[];
-  for(let i=0;i<selected.length;i++) urls.push(await uploadImage(selected[i],type));
-  return urls;
-}
-
-async function doUpload(type){
-  const map={
-    music:["musicImageFile","musicImage","musicImagePreview","musicUploadStatus"],
-    vlogs:["vlogImageFile","vlogImage","vlogImagePreview","vlogUploadStatus"],
-    blogs:["blogImageFile","blogImage","blogImagePreview","blogUploadStatus"],
-    artists:["artistImageFile","artistImage","artistImagePreview","artistUploadStatus"]
-  };
-  const [fileId,urlId,previewId,statusId]=map[type];
-  const input=$(fileId), files=input.files, status=$(statusId);
-
-  if(!files.length){status.textContent="✕ Choose an image first.";return;}
-  if(type==="artists" && files.length!==1){status.textContent="✕ Artist profile accepts exactly one image.";return;}
-  if(type!=="vlogs" && files.length>1){status.textContent="✕ This section accepts one image only.";return;}
-
-  status.textContent=type==="vlogs"
-    ? `Uploading ${files.length} image${files.length>1?"s":""}…`
-    : "Uploading…";
-
-  try{
-    if(type==="vlogs"){
-      const urls=await uploadImages(files,type);
-      $(urlId).value=urls[0]||"";
-      $(urlId).dataset.imageUrls=JSON.stringify(urls);
-      $(previewId).src=urls[0]||"";
-      $(previewId).style.display=urls.length?"block":"none";
-      status.textContent=`✓ Uploaded ${urls.length} separate image${urls.length>1?"s":""}.`;
-    }else{
-      const url=await uploadImage(files[0],type);
-      $(urlId).value=url;
-      $(urlId).dataset.imageUrls="";
-      $(previewId).src=url;
-      $(previewId).style.display="block";
-      status.textContent="✓ Uploaded successfully.";
-    }
-  }catch(e){
-    status.textContent="✕ "+(e?.message||"Upload failed.");
-  }
-}
-document.querySelectorAll("[data-upload]").forEach(b=>{
-  b.addEventListener("click",()=>doUpload(b.dataset.upload));
-});
+async function uploadImages(files,type){const selected=[...files];if(!selected.length)throw new Error("Choose at least one image.");if(selected.length===1)return [await uploadImage(selected[0],type)];const urls=[];for(let i=0;i<selected.length;i++){urls.push(await uploadImage(selected[i],type));}return urls}
+async function doUpload(type){const map={music:["musicImageFile","musicImage","musicImagePreview","musicUploadStatus"],vlogs:["vlogImageFile","vlogImage","vlogImagePreview","vlogUploadStatus"],blogs:["blogImageFile","blogImage","blogImagePreview","blogUploadStatus"],artists:["artistImageFile","artistImage","artistImagePreview","artistUploadStatus"]};const [f,i,p,s]=map[type];const files=$(f).files;if(!files.length){$(s).textContent="✕ Choose an image first.";return}if(type==="artists"&&files.length>1){$(s).textContent="✕ Artist profile accepts only one image.";return}$(s).textContent=`Uploading ${files.length} image${files.length>1?"s":""}…`;try{if(type==="vlogs"){const urls=await uploadImages(files,type);$(i).value=urls[0]||"";$(i).dataset.imageUrls=JSON.stringify(urls);$(p).src=urls[0];$(p).style.display="block";$(s).textContent=`✓ Uploaded ${urls.length} separate image${urls.length>1?"s":""}.`;}else{const url=await uploadImage(files[0],type);$(i).value=url;$(i).dataset.imageUrls="";$(p).src=url;$(p).style.display="block";$(s).textContent="✓ Uploaded.";}}catch(e){$(s).textContent="✕ "+e.message}}
 const labels={music:'Music',vlogs:'Vlogs',blogs:'Blogs',artists:'Artists'};function rows(box,values=[]){$(box).innerHTML='';(values.length?values:['']).forEach(v=>addRow(box,v))}function addRow(box,v=''){const d=document.createElement('div');d.className='url-row';d.innerHTML=`<input value="${esc(v)}" placeholder="https://..."><select><option>Auto detect</option></select><button type="button" class="btn danger">×</button>`;d.querySelector('button').onclick=()=>d.remove();$(box).appendChild(d)}function getRows(box){return[...$(box).querySelectorAll('input')].map(x=>x.value.trim()).filter(Boolean)}rows('musicLinks');rows('artistLinks');$('addMusicLink').onclick=()=>addRow('musicLinks');$('addArtistLink').onclick=()=>addRow('artistLinks');
-function reset(type){edit[type]=null;const f={music:'musicForm',vlogs:'vlogForm',blogs:'blogForm',artists:'artistForm'};$(f[type]).reset();if(type==='music'){rows('musicLinks');$('musicPub').checked=true;$('musicHeading').textContent='Add release';$('musicCancel').classList.add('hidden')}if(type==='vlogs'){$('vlogImage').value='';$('vlogImage').dataset.imageUrls='';$('vlogPub').checked=true;$('vlogHeading').textContent='Add vlog';$('vlogCancel').classList.add('hidden')}if(type==='blogs'){$('blogPub').checked=true;$('blogHeading').textContent='Write a blog';$('blogCancel').classList.add('hidden')}if(type==='artists'){rows('artistLinks');$('artistPub').checked=true;$('artistHeading').textContent='Add artist';$('artistCancel').classList.add('hidden')}}
+function reset(type){edit[type]=null;const f={music:'musicForm',vlogs:'vlogForm',blogs:'blogForm',artists:'artistForm'};$(f[type]).reset();if(type==='music'){rows('musicLinks');$('musicPub').checked=true;$('musicHeading').textContent='Add release';$('musicCancel').classList.add('hidden')}if(type==='vlogs'){$('vlogImage').dataset.imageUrls='';$('vlogPub').checked=true;$('vlogHeading').textContent='Add vlog';$('vlogCancel').classList.add('hidden')}if(type==='blogs'){$('blogPub').checked=true;$('blogHeading').textContent='Write a blog';$('blogCancel').classList.add('hidden')}if(type==='artists'){rows('artistLinks');$('artistPub').checked=true;$('artistHeading').textContent='Add artist';$('artistCancel').classList.add('hidden')}}
 async function save(type,data){const now={...data,updatedAt:serverTimestamp()};if(edit[type])await updateDoc(doc(db,type,edit[type]),now);else await addDoc(collection(db,type),{...now,createdAt:serverTimestamp()});reset(type);await load(type)}
 async function load(type){const box=$(`${type==='vlogs'?'vlog':type==='blogs'?'blog':type==='artists'?'artist':'music'}Items`);try{const s=await getDocs(query(collection(db,type),orderBy('createdAt','desc')));box.innerHTML=s.empty?'<div class="help">Nothing here yet.</div>':[...s.docs].map(d=>{const x=d.data(),img=x.imageUrl||x.coverUrl||'';return `<div class="item"><div>${img?`<img class="thumb" src="${esc(img)}">`:'<div class="thumb"></div>'}</div><div><div class="tag">${x.published?'Published':'Draft'} · ${esc(x.category||type)}</div><h3>${esc(x.title||x.name||'Untitled')}</h3><p>${esc((x.description||x.bio||'').slice(0,150))}</p></div><div class="item-actions"><button class="btn secondary" data-e="${d.id}">Edit</button><button class="btn danger" data-d="${d.id}">Delete</button></div></div>`}).join('');box.querySelectorAll('[data-d]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this item?')){await deleteDoc(doc(db,type,b.dataset.d));load(type)}});box.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>startEdit(type,b.dataset.e))}catch(e){box.innerHTML='<div class="help">Could not load this section. Check Firestore rules.</div>'}}
-async function startEdit(type,id){const s=await getDoc(doc(db,type,id));if(!s.exists())return;const x=s.data();edit[type]=id;if(type==='music'){$('musicTitle').value=x.title||'';$('musicType').value=x.category||'Single';$('musicImage').value=x.imageUrl||'';$('musicDesc').value=x.description||'';rows('musicLinks',x.platforms||[x.link||'']);$('musicPub').checked=!!x.published;$('musicHeading').textContent='Edit release';$('musicCancel').classList.remove('hidden')}if(type==='vlogs'){$('vlogTitle').value=x.title||'';$('vlogLink').value=x.link||'';$('vlogImage').value=x.imageUrl||'';$('vlogImage').dataset.imageUrls=JSON.stringify(Array.isArray(x.imageUrls)?x.imageUrls:(x.imageUrl?[x.imageUrl]:[]));$('vlogImage').dataset.imageUrls=JSON.stringify(Array.isArray(x.imageUrls)?x.imageUrls:(x.imageUrl?[x.imageUrl]:[]));$('vlogDesc').value=x.description||'';$('vlogPub').checked=!!x.published;$('vlogHeading').textContent='Edit vlog';$('vlogCancel').classList.remove('hidden')}if(type==='blogs'){$('blogTitle').value=x.title||'';$('blogType').value=x.category||'News';$('blogImage').value=x.imageUrl||'';$('blogDesc').value=x.description||'';$('blogLink').value=x.link||'';$('blogPub').checked=!!x.published;$('blogHeading').textContent='Edit story';$('blogCancel').classList.remove('hidden')}if(type==='artists'){$('artistTitle').value=x.title||'';$('artistRole').value=x.category||'';$('artistImage').value=x.imageUrl||'';$('artistImage').dataset.imageUrls='';$('artistBio').value=x.bio||x.description||'';rows('artistLinks',x.platforms||[]);$('artistPub').checked=!!x.published;$('artistHeading').textContent='Edit artist';$('artistCancel').classList.remove('hidden')}window.scrollTo({top:0,behavior:'smooth'})}
+async function startEdit(type,id){const s=await getDoc(doc(db,type,id));if(!s.exists())return;const x=s.data();edit[type]=id;if(type==='music'){$('musicTitle').value=x.title||'';$('musicType').value=x.category||'Single';$('musicImage').value=x.imageUrl||'';$('musicDesc').value=x.description||'';rows('musicLinks',x.platforms||[x.link||'']);$('musicPub').checked=!!x.published;$('musicHeading').textContent='Edit release';$('musicCancel').classList.remove('hidden')}if(type==='vlogs'){$('vlogTitle').value=x.title||'';$('vlogLink').value=x.link||'';$('vlogImage').value=x.imageUrl||'';$('vlogImage').dataset.imageUrls=JSON.stringify(Array.isArray(x.imageUrls)?x.imageUrls:(x.imageUrl?[x.imageUrl]:[]));$('vlogDesc').value=x.description||'';$('vlogPub').checked=!!x.published;$('vlogHeading').textContent='Edit vlog';$('vlogCancel').classList.remove('hidden')}if(type==='blogs'){$('blogTitle').value=x.title||'';$('blogType').value=x.category||'News';$('blogImage').value=x.imageUrl||'';$('blogDesc').value=x.description||'';$('blogLink').value=x.link||'';$('blogPub').checked=!!x.published;$('blogHeading').textContent='Edit story';$('blogCancel').classList.remove('hidden')}if(type==='artists'){$('artistTitle').value=x.title||'';$('artistRole').value=x.category||'';$('artistImage').value=x.imageUrl||'';$('artistImage').dataset.imageUrls='';$('artistImagePreview').src=x.imageUrl||'';$('artistImagePreview').style.display=x.imageUrl?'block':'none';$('artistUploadStatus').textContent='';$('artistBio').value=x.bio||x.description||'';rows('artistLinks',x.platforms||[]);$('artistPub').checked=!!x.published;$('artistHeading').textContent='Edit artist';$('artistCancel').classList.remove('hidden')}window.scrollTo({top:0,behavior:'smooth'})}
 $('musicForm').onsubmit=e=>{e.preventDefault();$('musicMsg').textContent='Saving…';save('music',{title:$('musicTitle').value.trim(),category:$('musicType').value,imageUrl:$('musicImage').value.trim(),description:$('musicDesc').value.trim(),platforms:getRows('musicLinks'),link:getRows('musicLinks')[0]||'',published:$('musicPub').checked}).then(()=>$('musicMsg').textContent='Saved successfully.').catch(e=>$('musicMsg').textContent=e.message)};
 $('vlogForm').onsubmit=e=>{e.preventDefault();$('vlogMsg').textContent='Saving…';let urls=[];try{urls=JSON.parse($('vlogImage').dataset.imageUrls||'[]')}catch(e){}if(!urls.length&&$('vlogImage').value.trim())urls=[$('vlogImage').value.trim()];save('vlogs',{title:$('vlogTitle').value.trim(),category:'Vlog',link:$('vlogLink').value.trim(),imageUrl:urls[0]||'',imageUrls:urls,description:$('vlogDesc').value.trim(),published:$('vlogPub').checked}).then(()=>$('vlogMsg').textContent='Saved successfully.').catch(e=>$('vlogMsg').textContent=e.message)};
 $('blogForm').onsubmit=e=>{e.preventDefault();$('blogMsg').textContent='Saving…';save('blogs',{title:$('blogTitle').value.trim(),category:$('blogType').value,imageUrl:$('blogImage').value.trim(),description:$('blogDesc').value.trim(),link:$('blogLink').value.trim(),published:$('blogPub').checked}).then(()=>$('blogMsg').textContent='Published/saved successfully.').catch(e=>$('blogMsg').textContent=e.message)};
-$('artistForm').onsubmit=e=>{e.preventDefault();$('artistMsg').textContent='Saving…';save('artists',{title:$('artistTitle').value.trim(),category:$('artistRole').value.trim()||'Artist',imageUrl:$('artistImage').value.trim(),bio:$('artistBio').value.trim(),description:$('artistBio').value.trim(),platforms:getRows('artistLinks'),published:$('artistPub').checked}).then(()=>$('artistMsg').textContent='Saved successfully.').catch(e=>$('artistMsg').textContent=e.message)};
-['music','vlogs','blogs','artists'].forEach(t=>$(t==='vlogs'?'vlogCancel':t==='blogs'?'blogCancel':t==='artists'?'artistCancel':'musicCancel').onclick=()=>reset(t));async function counts(){const all=await Promise.all(['music','vlogs','blogs','artists'].map(t=>getDocs(collection(db,t))));['mMusic','mVlogs','mBlogs','mArtists'].forEach((id,i)=>$(id).textContent=all[i].size)}document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.side button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));$(b.dataset.view).classList.add('active');if(labels[b.dataset.view])load(b.dataset.view)});document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>document.querySelector(`[data-view="${b.dataset.go}"]`).click());
-$('loginBtn').onclick=async()=>{
+$('artistForm').onsubmit=async e=>{
+  e.preventDefault();
+  $('artistMsg').textContent='Saving…';
   try{
-    await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value);
+    const data={
+      title:$('artistTitle').value.trim(),
+      category:$('artistRole').value.trim()||'Artist',
+      imageUrl:$('artistImage').value.trim(),
+      bio:$('artistBio').value.trim(),
+      description:$('artistBio').value.trim(),
+      platforms:getRows('artistLinks'),
+      published:$('artistPub').checked,
+      updatedAt:serverTimestamp(),
+      imageUrls:deleteField()
+    };
+    if(edit.artists){
+      // EDIT = update the SAME artist document; the new profile URL replaces the old one.
+      await updateDoc(doc(db,'artists',edit.artists),data);
+    }else{
+      await addDoc(collection(db,'artists'),{...data,createdAt:serverTimestamp()});
+    }
+    reset('artists');
+    await load('artists');
+    $('artistMsg').textContent='Saved successfully.';
   }catch(e){
-    $('loginMsg').textContent="Login failed. Check your email and password.";
+    $('artistMsg').textContent=e.message;
   }
 };
-$('logout').onclick=async()=>{await signOut(auth);};
-onAuthStateChanged(auth,u=>{
-  if(u){
-    $('login').classList.add('hidden');
-    $('studio').classList.remove('hidden');
-    counts();
-    ['music','vlogs','blogs','artists'].forEach(load);
-  }else{
-    $('studio').classList.add('hidden');
-    $('login').classList.remove('hidden');
-  }
-});
+['music','vlogs','blogs','artists'].forEach(t=>$(t==='vlogs'?'vlogCancel':t==='blogs'?'blogCancel':t==='artists'?'artistCancel':'musicCancel').onclick=()=>reset(t));async function counts(){const all=await Promise.all(['music','vlogs','blogs','artists'].map(t=>getDocs(collection(db,t))));['mMusic','mVlogs','mBlogs','mArtists'].forEach((id,i)=>$(id).textContent=all[i].size)}document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.side button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));$(b.dataset.view).classList.add('active');if(labels[b.dataset.view])load(b.dataset.view)});document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>document.querySelector(`[data-view="${b.dataset.go}"]`).click());
+$('loginBtn').onclick=async()=>{try{sessionStorage.removeItem(ADMIN_LEFT_KEY);await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(e){$('loginMsg').textContent='Login failed. Check your email and password.'}};$('logout').onclick=()=>{sessionStorage.removeItem(ADMIN_LEFT_KEY);signOut(auth)};onAuthStateChanged(auth,u=>{const left=(()=>{try{return sessionStorage.getItem(ADMIN_LEFT_KEY)==='1'}catch(e){return false}})();if(left){sessionStorage.removeItem(ADMIN_LEFT_KEY);if(u)signOut(auth);$('studio').classList.add('hidden');$('login').classList.remove('hidden');return}if(u){$('login').classList.add('hidden');$('studio').classList.remove('hidden');counts();['music','vlogs','blogs','artists'].forEach(load)}else{$('studio').classList.add('hidden');$('login').classList.remove('hidden')}});
 </script></body></html>
