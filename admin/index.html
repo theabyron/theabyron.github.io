@@ -181,20 +181,59 @@
 
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import{getFirestore,collection,addDoc,getDocs,query,orderBy,serverTimestamp,deleteDoc,doc,updateDoc,getDoc,setDoc}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import{initializeAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut,inMemoryPersistence}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import{getFirestore,collection,addDoc,getDocs,serverTimestamp,deleteDoc,doc,updateDoc,getDoc,setDoc}from"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 import{FIREBASE_CONFIG}from"../firebase-config.js";
 
-const app=initializeApp(FIREBASE_CONFIG),auth=getAuth(app),db=getFirestore(app);
+const app=initializeApp(FIREBASE_CONFIG),auth=initializeAuth(app,{persistence:inMemoryPersistence}),db=getFirestore(app);
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+const mediaUrl=u=>{try{const x=new URL(u);if(x.hostname==='theabyron.github.io'&&x.pathname.startsWith('/uploads/'))return 'https://raw.githubusercontent.com/theabyron/the-abyron.github.io/main'+x.pathname;return u}catch{return u}};
 const UPLOAD_ENDPOINT="https://the-abyron-upload.ankusharya82654.workers.dev";
+
+// ADMIN SESSION SECURITY
+// Firebase normally persists the login across refreshes. The studio intentionally
+// treats leaving the admin page, refreshing it, switching apps/tabs, or navigating
+// back as a logout. File pickers are the one exception: opening a picker temporarily
+// hides the page on many mobile browsers, so that transition must not log the admin out.
+const ADMIN_LEFT_KEY = "theabyron_admin_left";
+let filePickerOpen = false;
+let leaveHandled = false;
+
+function markAdminLeft(){
+  if(leaveHandled) return;
+  leaveHandled = true;
+  try{sessionStorage.setItem(ADMIN_LEFT_KEY,"1");}catch(e){console.error("Session marker failed:",e)}
+  signOut(auth).catch(e=>console.error("Admin logout failed:",e));
+}
+
+function markAdminReturned(){
+  filePickerOpen = false;
+}
+
+// Opening a native file picker can fire visibilitychange/pagehide on mobile.
+// Do not treat that temporary state as leaving the studio.
+document.querySelectorAll('input[type="file"]').forEach(input=>{
+  input.addEventListener("click",()=>{filePickerOpen=true});
+  input.addEventListener("change",()=>{filePickerOpen=false});
+});
+window.addEventListener("focus",markAdminReturned);
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState === "visible"){markAdminReturned();return;}
+  if(!filePickerOpen) markAdminLeft();
+});
+window.addEventListener("pagehide",()=>{if(!filePickerOpen)markAdminLeft()});
+window.addEventListener("beforeunload",()=>{
+  // Synchronous marker guarantees the next page load cannot restore this session.
+  try{sessionStorage.setItem(ADMIN_LEFT_KEY,"1")}catch(e){}
+});
+
 function playStudioIntro(){const el=$("studioIntro");if(!el)return;el.classList.remove("show");void el.offsetWidth;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2100)}
 let edit={music:null,vlogs:null,blogs:null,artists:null};
 
 async function uploadAsset(file,type){
   if(!file)throw new Error("Choose a file first.");
-  if(file.size>25*1024*1024)throw new Error("File must be 25 MB or smaller.");
+  const maxBytes=file.type.startsWith("image/")?8*1024*1024:25*1024*1024;if(file.size>maxBytes)throw new Error(`File must be ${file.type.startsWith("image/")?8:25} MB or smaller.`);
   const token=await auth.currentUser.getIdToken(true);
   const fd=new FormData();fd.append("file",file);fd.append("type",type);
   let r;try{r=await fetch(UPLOAD_ENDPOINT,{method:"POST",headers:{Authorization:"Bearer "+token},body:fd});}catch(e){throw new Error("Upload server connection failed. Check Worker/CORS.");}
@@ -242,11 +281,14 @@ rows("musicLinks");rows("artistLinks");$("addMusicLink").onclick=()=>addRow("mus
 
 function reset(type){
   edit[type]=null;const f={music:"musicForm",vlogs:"vlogForm",blogs:"blogForm",artists:"artistForm"};$(f[type]).reset();
+  const media={music:["musicImageFile","musicImage","musicImagePreview","musicUploadStatus"],vlogs:["vlogImageFile","vlogImage","vlogImagePreview","vlogUploadStatus"],blogs:["blogImageFile","blogImage","blogImagePreview","blogUploadStatus"],artists:["artistImageFile","artistImage","artistImagePreview","artistUploadStatus"]};
+  const m=media[type];if(m){$(m[0]).value="";$(m[1]).value="";$(m[2]).src="";$(m[2]).style.display="none";$(m[3]).textContent="";}
   if(type==="music"){rows("musicLinks");$("musicPub").checked=true;$("musicHeading").textContent="Add release";$("musicCancel").classList.add("hidden")}
   if(type==="vlogs"){$("vlogImage").dataset.imageUrls="";$("vlogPub").checked=true;$("vlogHeading").textContent="Add vlog";$("vlogCancel").classList.add("hidden")}
   if(type==="blogs"){$("blogPub").checked=true;$("blogHeading").textContent="Write a blog";$("blogCancel").classList.add("hidden")}
   if(type==="artists"){rows("artistLinks");$("artistPub").checked=true;$("artistHeading").textContent="Add artist";$("artistCancel").classList.add("hidden")}
 }
+
 async function save(type,data){
   if(edit[type])await updateDoc(doc(db,type,edit[type]),{...data,updatedAt:serverTimestamp()});
   else await addDoc(collection(db,type),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});
@@ -255,20 +297,27 @@ async function save(type,data){
 async function load(type){
   const box=$(`${type==="vlogs"?"vlog":type==="blogs"?"blog":type==="artists"?"artist":"music"}Items`);
   try{
-    const s=await getDocs(query(collection(db,type),orderBy("createdAt","desc")));
-    box.innerHTML=s.empty?'<div class="help">Nothing here yet.</div>':[...s.docs].map(d=>{
+    const s=await getDocs(collection(db,type));
+    const docs=[...s.docs].sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));
+    box.innerHTML=!docs.length?'<div class="help">Nothing here yet.</div>':docs.map(d=>{
       const x=d.data(),img=x.imageUrl||x.coverUrl||"";
-      return `<div class="item"><div>${img?`<img class="thumb" src="${esc(img)}">`:'<div class="thumb"></div>'}</div><div><div class="tag">${x.published?"Published":"Draft"} · ${esc(x.category||type)}</div><h3>${esc(x.title||x.name||"Untitled")}</h3><p>${esc((x.description||x.bio||"").slice(0,150))}</p>${type==="artists"&&x.email?`<p class="help">✉ ${esc(x.email)}</p>`:""}</div><div class="item-actions"><button class="btn secondary" data-e="${d.id}">Edit</button></div></div>`;
+      return `<div class="item"><div>${img?`<img class="thumb" src="${esc(mediaUrl(img))}">`:'<div class="thumb"></div>'}</div><div><div class="tag">${x.published===false?"Draft":"Published"} · ${esc(x.category||type)}</div><h3>${esc(x.title||x.name||"Untitled")}</h3><p>${esc((x.description||x.bio||"").slice(0,150))}</p>${type==="artists"&&x.email?`<p class="help">✉ ${esc(x.email)}</p>`:""}</div><div class="item-actions"><button class="btn secondary" data-e="${d.id}">Edit</button><button class="btn danger" type="button" data-del="${d.id}">Delete</button></div></div>`;
     }).join("");
     box.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>startEdit(type,b.dataset.e));
+    box.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>deleteRecord(type,b.dataset.del));
   }catch(e){box.innerHTML='<div class="help">Could not load this section. Check Firestore rules.</div>'}
+}
+async function deleteRecord(type,id){
+  const label={music:"release",vlogs:"vlog",blogs:"story",artists:"artist"}[type]||type;
+  if(!confirm(`Delete this ${label}? This removes the Firestore record. Uploaded media in GitHub is not automatically deleted.`))return;
+  try{await deleteDoc(doc(db,type,id));if(edit[type]===id)reset(type);await load(type);await counts();}catch(e){alert(`Could not delete ${label}: `+e.message)}
 }
 async function startEdit(type,id){
   const s=await getDoc(doc(db,type,id));if(!s.exists())return;const x=s.data();edit[type]=id;
-  if(type==="music"){$("musicTitle").value=x.title||"";$("musicType").value=x.category||"Single";$("musicImage").value=x.imageUrl||"";$("musicImagePreview").src=x.imageUrl||"";$("musicImagePreview").style.display=x.imageUrl?"block":"none";$("musicDesc").value=x.description||"";rows("musicLinks",x.platforms||[x.link||""]);$("musicPub").checked=!!x.published;$("musicHeading").textContent="Edit release";$("musicCancel").classList.remove("hidden")}
-  if(type==="vlogs"){$("vlogTitle").value=x.title||"";$("vlogLink").value=x.link||"";$("vlogImage").value=x.imageUrl||"";$("vlogImage").dataset.imageUrls=JSON.stringify(Array.isArray(x.imageUrls)?x.imageUrls:(x.imageUrl?[x.imageUrl]:[]));$("vlogImagePreview").src=x.imageUrl||"";$("vlogImagePreview").style.display=x.imageUrl?"block":"none";$("vlogDesc").value=x.description||"";$("vlogPub").checked=!!x.published;$("vlogHeading").textContent="Edit vlog";$("vlogCancel").classList.remove("hidden")}
-  if(type==="blogs"){$("blogTitle").value=x.title||"";$("blogType").value=x.category||"News";$("blogImage").value=x.imageUrl||"";$("blogImagePreview").src=x.imageUrl||"";$("blogImagePreview").style.display=x.imageUrl?"block":"none";$("blogDesc").value=x.description||"";$("blogLink").value=x.link||"";$("blogPub").checked=!!x.published;$("blogHeading").textContent="Edit story";$("blogCancel").classList.remove("hidden")}
-  if(type==="artists"){$("artistTitle").value=x.title||"";$("artistRole").value=x.category||"";$("artistEmail").value=x.email||"";$("artistImage").value=x.imageUrl||"";$("artistImagePreview").src=x.imageUrl||"";$("artistImagePreview").style.display=x.imageUrl?"block":"none";$("artistBio").value=x.bio||x.description||"";rows("artistLinks",x.platforms||[]);$("artistPub").checked=!!x.published;$("artistHeading").textContent="Edit artist";$("artistCancel").classList.remove("hidden")}
+  if(type==="music"){$("musicTitle").value=x.title||"";$("musicType").value=x.category||"Single";$("musicImage").value=x.imageUrl||"";$("musicImagePreview").src=mediaUrl(x.imageUrl||"");$("musicImagePreview").style.display=x.imageUrl?"block":"none";$("musicDesc").value=x.description||"";rows("musicLinks",x.platforms||[x.link||""]);$("musicPub").checked=x.published!==false;$("musicHeading").textContent="Edit release";$("musicCancel").classList.remove("hidden")}
+  if(type==="vlogs"){$("vlogTitle").value=x.title||"";$("vlogLink").value=x.link||"";$("vlogImage").value=x.imageUrl||"";$("vlogImage").dataset.imageUrls=JSON.stringify(Array.isArray(x.imageUrls)?x.imageUrls:(x.imageUrl?[x.imageUrl]:[]));$("vlogImagePreview").src=mediaUrl(x.imageUrl||"");$("vlogImagePreview").style.display=x.imageUrl?"block":"none";$("vlogDesc").value=x.description||"";$("vlogPub").checked=x.published!==false;$("vlogHeading").textContent="Edit vlog";$("vlogCancel").classList.remove("hidden")}
+  if(type==="blogs"){$("blogTitle").value=x.title||"";$("blogType").value=x.category||"News";$("blogImage").value=x.imageUrl||"";$("blogImagePreview").src=mediaUrl(x.imageUrl||"");$("blogImagePreview").style.display=x.imageUrl?"block":"none";$("blogDesc").value=x.description||"";$("blogLink").value=x.link||"";$("blogPub").checked=x.published!==false;$("blogHeading").textContent="Edit story";$("blogCancel").classList.remove("hidden")}
+  if(type==="artists"){$("artistTitle").value=x.title||"";$("artistRole").value=x.category||"";$("artistEmail").value=x.email||"";$("artistImage").value=x.imageUrl||"";$("artistImagePreview").src=mediaUrl(x.imageUrl||"");$("artistImagePreview").style.display=x.imageUrl?"block":"none";$("artistBio").value=x.bio||x.description||"";rows("artistLinks",x.platforms||[]);$("artistPub").checked=x.published!==false;$("artistHeading").textContent="Edit artist";$("artistCancel").classList.remove("hidden")}
   showPage(type);
 }
 $("musicForm").onsubmit=e=>{e.preventDefault();save("music",{title:$("musicTitle").value.trim(),category:$("musicType").value,imageUrl:$("musicImage").value.trim(),description:$("musicDesc").value.trim(),platforms:getRows("musicLinks"),link:getRows("musicLinks")[0]||"",published:$("musicPub").checked}).then(()=>$("musicMsg").textContent="Saved successfully.").catch(e=>$("musicMsg").textContent=e.message)};
@@ -290,9 +339,10 @@ document.querySelectorAll(".side button").forEach(b=>b.onclick=()=>showPage(b.da
 
 async function counts(){
   const names=["music","vlogs","blogs","artists","photos"];
-  const all=await Promise.all(names.map(t=>getDocs(collection(db,t))));
-  ["mMusic","mVlogs","mBlogs","mArtists","mPhotos"].forEach((id,i)=>$(id).textContent=all[i].size);
-  $("dashboardRecord").innerHTML=names.map((n,i)=>`<div class="record-card"><b>${all[i].size}</b><small>${n.toUpperCase()} RECORDS</small></div>`).join("");
+  const results=await Promise.all(names.map(async t=>{try{return await getDocs(collection(db,t))}catch(e){console.error(`Count failed for ${t}:`,e);return null}}));
+  const ids=["mMusic","mVlogs","mBlogs","mArtists","mPhotos"];
+  results.forEach((snap,i)=>$(ids[i]).textContent=snap?snap.size:"—");
+  $("dashboardRecord").innerHTML=names.map((n,i)=>`<div class="record-card"><b>${results[i]?results[i].size:"—"}</b><small>${n.toUpperCase()} RECORDS</small></div>`).join("");
 }
 
 async function loadDashboard(){
@@ -310,8 +360,9 @@ $("saveDashboard").onclick=async()=>{try{await setDoc(doc(db,"settings","dashboa
 async function loadPhotos(){
   const box=$("photoItems");box.innerHTML='<div class="help">Loading photos…</div>';
   try{
-    const s=await getDocs(query(collection(db,"photos"),orderBy("createdAt","desc")));
-    box.innerHTML=s.empty?'<div class="help">No photos yet.</div>':[...s.docs].map(d=>{const x=d.data();return `<div class="photo-admin"><img src="${esc(x.imageUrl||"")}" loading="lazy"><div class="photo-meta"><b>${esc(x.title||"Untitled photo")}</b><span class="tag">${x.published===false?"Hidden":"Published"}</span></div><div class="photo-url">${esc(x.imageUrl||"")}</div><div class="photo-actions"><button type="button" class="btn secondary" data-photo-edit="${d.id}">Edit</button><button type="button" class="btn danger" data-photo-delete="${d.id}">Delete</button></div></div>`}).join("");
+    const s=await getDocs(collection(db,"photos"));
+    const docs=[...s.docs].sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));
+    box.innerHTML=!docs.length?'<div class="help">No photos yet.</div>':docs.map(d=>{const x=d.data();return `<div class="photo-admin"><img src="${esc(mediaUrl(x.imageUrl||""))}" loading="lazy"><div class="photo-meta"><b>${esc(x.title||"Untitled photo")}</b><span class="tag">${x.published===false?"Hidden":"Published"}</span></div><div class="photo-url">${esc(x.imageUrl||"")}</div><div class="photo-actions"><button type="button" class="btn secondary" data-photo-edit="${d.id}">Edit</button><button type="button" class="btn danger" data-photo-delete="${d.id}">Delete</button></div></div>`}).join("");
     box.querySelectorAll('[data-photo-edit]').forEach(b=>b.onclick=()=>editPhoto(b.dataset.photoEdit));
     box.querySelectorAll('[data-photo-delete]').forEach(b=>b.onclick=()=>deletePhoto(b.dataset.photoDelete));
   }catch(e){box.innerHTML='<div class="help">Could not load photos. Check Firestore rules.</div>'}
@@ -349,7 +400,7 @@ $("uploadPhotos").onclick=async()=>{
 
 const igAccept={photo:"image/jpeg,image/png,image/webp",video:"video/mp4,video/webm,video/quicktime",song:"audio/mpeg,audio/mp4,audio/wav,audio/ogg",story:"image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime",note:""};
 const igAllowed={photo:["image/jpeg","image/png","image/webp"],video:["video/mp4","video/webm","video/quicktime"],song:["audio/mpeg","audio/mp4","audio/wav","audio/ogg"],story:["image/jpeg","image/png","image/webp","video/mp4","video/webm","video/quicktime"],note:[]};
-function updateIgType(){const t=$("igType").value;const f=$("igMediaField");const label=$("igMediaLabel");if(t==="note"){f.style.display="none";return}f.style.display="block";label.textContent=t==="photo"?"Upload photo":t==="video"?"Upload video / Reel":t==="song"?"Upload song / audio":"Optional Story media";$("igMediaFile").accept=igAccept[t]||"";$("igMediaFile").value="";$("igMediaUrl").value="";$("igUploadStatus").textContent=""}
+function updateIgType(clearMedia=true){const t=$("igType").value;const f=$("igMediaField");const label=$("igMediaLabel");if(t==="note"){f.style.display="none";if(clearMedia){$("igMediaFile").value="";$("igMediaUrl").value="";$("igUploadStatus").textContent="";}return}f.style.display="block";label.textContent=t==="photo"?"Upload photo":t==="video"?"Upload video / Reel":t==="song"?"Upload song / audio":"Optional Story media";$("igMediaFile").accept=igAccept[t]||"";if(clearMedia){$("igMediaFile").value="";$("igMediaUrl").value="";$("igUploadStatus").textContent=""}}
 $("igType").onchange=updateIgType;updateIgType();
 $("igUpload").onclick=async()=>{const t=$("igType").value, file=$("igMediaFile").files[0];if(t==="note")return;if(!file){$("igUploadStatus").textContent="✕ Choose a file first.";return}const ok=igAllowed[t]||[];if(file.type && !ok.includes(file.type)){$("igUploadStatus").textContent="✕ Wrong file type for "+t+". Please choose a supported file.";return}$("igUploadStatus").textContent="Uploading…";try{const url=await uploadAsset(file,"instagram-"+t);$("igMediaUrl").value=url;$("igUploadStatus").textContent="✓ Uploaded."}catch(e){$("igUploadStatus").textContent="✕ "+e.message}};
 async function loadInstagram(){
@@ -357,15 +408,18 @@ async function loadInstagram(){
  box.innerHTML='<div class="help">Loading…</div>';
  try{
   const [igSnap,artistSnap]=await Promise.all([
-   getDocs(query(collection(db,"instagram"),orderBy("createdAt","desc"))),
+   getDocs(collection(db,"instagram")),
    getDocs(collection(db,"artists"))
   ]);
+  const igDocs=[...igSnap.docs].sort((a,b)=>(b.data().createdAt?.toMillis?.()||0)-(a.data().createdAt?.toMillis?.()||0));
   const amap={}; artistSnap.forEach(d=>amap[d.id]=d.data());
-  box.innerHTML=igSnap.empty?'<div class="help">No Instagram content yet.</div>':[...igSnap.docs].map(d=>{
+  box.innerHTML=!igDocs.length?'<div class="help">No Instagram content yet.</div>':igDocs.map(d=>{
    const x=d.data(), ids=Array.isArray(x.artistIds)?x.artistIds:[];
    const names=ids.map(id=>amap[id]?.title||amap[id]?.name).filter(Boolean);
-   return `<div class="item"><div class="thumb"></div><div><div class="tag">${esc(x.type||"content")} · ${x.published===false?"Draft":"Saved"}</div><h3>${esc(x.title||"Untitled")}</h3><p>${esc((x.caption||x.story||x.note||"").slice(0,150))}</p><p class="help">Artists: ${esc(names.length?names.join(", "):"None selected")}</p></div><div class="item-actions">${x.mediaUrl?`<a class="btn secondary" href="${esc(x.mediaUrl)}" target="_blank">Open media</a>`:""}<button class="btn secondary" type="button" onclick="editInstagram('${d.id}')">Edit</button><button class="btn secondary" type="button" onclick="deleteInstagram('${d.id}')">Delete</button></div></div>`
+   return `<div class="item"><div class="thumb"></div><div><div class="tag">${esc(x.type||"content")} · ${x.published===false?"Draft":"Saved"}</div><h3>${esc(x.title||"Untitled")}</h3><p>${esc((x.caption||x.story||x.note||"").slice(0,150))}</p><p class="help">Artists: ${esc(names.length?names.join(", "):"None selected")}</p></div><div class="item-actions">${x.mediaUrl?`<a class="btn secondary" href="${esc(x.mediaUrl)}" target="_blank">Open media</a>`:""}<button class="btn secondary" type="button" data-ig-edit="${d.id}">Edit</button><button class="btn secondary" type="button" data-ig-delete="${d.id}">Delete</button></div></div>`
   }).join("");
+  box.querySelectorAll("[data-ig-edit]").forEach(b=>b.onclick=()=>editInstagram(b.dataset.igEdit));
+  box.querySelectorAll("[data-ig-delete]").forEach(b=>b.onclick=()=>deleteInstagram(b.dataset.igDelete));
  }catch(e){box.innerHTML='<div class="help">Could not load Instagram archive.</div>';}
 }
 async function loadInstagramArtists(selected=[]){
@@ -380,8 +434,8 @@ async function editInstagram(id){
  try{
   const snap=await getDoc(doc(db,"instagram",id)); if(!snap.exists())return;
   const x=snap.data(); window.igEditId=id;
-  $("igType").value=x.type||"photo"; $("igTitle").value=x.title||""; $("igMediaUrl").value=x.mediaUrl||""; $("igCaption").value=x.caption||""; $("igStory").value=x.story||""; $("igNote").value=x.note||""; $("igLink").value=x.link||""; $("igPub").checked=x.published!==false;
-  updateIgType(); await loadInstagramArtists(Array.isArray(x.artistIds)?x.artistIds:[]);
+  $("igType").value=x.type||"photo"; updateIgType(false); $("igTitle").value=x.title||""; $("igMediaUrl").value=x.mediaUrl||""; $("igCaption").value=x.caption||""; $("igStory").value=x.story||""; $("igNote").value=x.note||""; $("igLink").value=x.link||""; $("igPub").checked=x.published!==false;
+  $("igUploadStatus").textContent=x.mediaUrl?"✓ Existing media loaded.":""; await loadInstagramArtists(Array.isArray(x.artistIds)?x.artistIds:[]);
   $("igMsg").textContent="Editing saved Instagram content. Save to update it."; window.scrollTo({top:0,behavior:"smooth"});
  }catch(e){alert('Could not edit Instagram content: '+e.message)}
 }
@@ -396,8 +450,31 @@ $("instagramForm").onsubmit=async e=>{e.preventDefault();try{
  }catch(e){$("igMsg").textContent=e.message}};
 
 
-$("loginBtn").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value)}catch(e){$("loginMsg").textContent="Login failed. Check your email and password."}};
-$("logout").onclick=()=>signOut(auth);
-onAuthStateChanged(auth,u=>{if(u){$("login").classList.add("hidden");$("studio").classList.remove("hidden");playStudioIntro();counts();loadDashboard();load("music");}else{$("studio").classList.add("hidden");$("login").classList.remove("hidden")}});
+$("loginBtn").onclick=async()=>{
+  try{
+    sessionStorage.removeItem(ADMIN_LEFT_KEY);
+    leaveHandled=false;
+    await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);
+  }catch(e){$("loginMsg").textContent="Login failed. Check your email and password."}
+};
+$("logout").onclick=async()=>{
+  try{sessionStorage.removeItem(ADMIN_LEFT_KEY)}catch(e){}
+  leaveHandled=true;
+  await signOut(auth);
+};
+const sessionWasLeft=()=>{try{return sessionStorage.getItem(ADMIN_LEFT_KEY)==="1"}catch(e){return false}};
+if(sessionWasLeft()) signOut(auth).catch(()=>{});
+onAuthStateChanged(auth,u=>{
+  const blocked=sessionWasLeft();
+  if(blocked){
+    $("studio").classList.add("hidden");
+    $("login").classList.remove("hidden");
+    if(!u){try{sessionStorage.removeItem(ADMIN_LEFT_KEY)}catch(e){}}
+    else signOut(auth).catch(()=>{});
+    return;
+  }
+  if(u){$("login").classList.add("hidden");$("studio").classList.remove("hidden");playStudioIntro();counts();loadDashboard();load("music");}
+  else{$("studio").classList.add("hidden");$("login").classList.remove("hidden")}
+});
 </script>
 </body></html>
